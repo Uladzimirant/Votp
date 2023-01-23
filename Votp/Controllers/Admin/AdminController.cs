@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Votp.Models.Request;
 using Votp.Models.Response;
 using Votp.Services.Contracts;
 
@@ -28,6 +29,12 @@ namespace Votp.Controllers.Admin
         public ActionResult Users()
         {
             return View(_tokenService.GetUsers());
+        }
+
+        [HttpPost]
+        public IActionResult SelectionAction([FromForm] SelectedTokensIDto selection)
+        {
+            return RedirectToAction(nameof(Tokens));
         }
 
         //// GET: AdminController/Details/5

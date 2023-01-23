@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Votp.Models.Response.TokenODto>
+﻿@using Votp.Models.Request;
+@model IEnumerable<Votp.Models.Response.TokenODto>
+
 
 @{
     ViewData["Title"] = "Tokens";
@@ -21,9 +23,11 @@
             <th></th>
         </tr>
     </thead>
+    <form asp-action="SelectionAction">
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model) { 
         <tr>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Token)
             </td>
@@ -31,11 +35,18 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <input type="checkbox" id=@item.Id name="Tokens" value=@item.Id>
             </td>
         </tr>
 }
     </tbody>
+    <div class="form-group">
+        <input type="submit" value="Select" class="btn btn-primary" />
+    </div>
+    </form>
+    <!--td>
+        Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td-->
 </table>
