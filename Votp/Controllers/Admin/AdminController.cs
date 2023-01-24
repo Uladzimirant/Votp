@@ -11,9 +11,12 @@ namespace Votp.Controllers.Admin
         // GET: AdminController
         private ILogger<AdminController> _l;
         private ITokenService _tokenService;
-        public AdminController(ILogger<AdminController> l, ITokenService tokenService) {
+        private IUserService _userService;
+        public AdminController(ILogger<AdminController> l, ITokenService tokenService, IUserService userService)
+        {
             _l = l;
             _tokenService = tokenService;
+            _userService = userService;
         }
 
         public ActionResult Index()
@@ -28,7 +31,7 @@ namespace Votp.Controllers.Admin
 
         public ActionResult Users()
         {
-            return View(_tokenService.GetUsers());
+            return View(_userService.GetUsers());
         }
 
         [HttpPost]

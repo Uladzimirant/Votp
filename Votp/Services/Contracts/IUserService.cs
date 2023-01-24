@@ -2,8 +2,8 @@
 
 namespace Votp.Services.Contracts
 {
-    public interface ITokenService
+    public interface IUserService
     {
-        public List<TokenODto> GetTokens();
+        public List<UserODto> GetUsers();
     }
 }

@@ -6,7 +6,7 @@ using Votp.Services.Contracts;
 
 namespace Votp.Services.Realizations
 {
-    public class DBTokenService : ITokenService
+    public class DBTokenService : ITokenService, IUserService
     {
         private ILogger<DBTokenService> _l;
         private IMapper _mapper;

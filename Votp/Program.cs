@@ -17,6 +17,7 @@ namespace Votp
 
 
             builder.Services.AddTransient<ITokenService, DBTokenService>();
+            builder.Services.AddTransient<IUserService, DBTokenService>();
             builder.Services.AddTransient<ITokenCheckerService, TokenCheckerService>();
 
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
