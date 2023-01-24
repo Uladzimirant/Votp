@@ -1,5 +1,7 @@
-﻿@using Votp.Models.Request;
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using Votp.Models.Request;
 @model IEnumerable<Votp.Models.Response.TokenODto>
+@inject IViewLocalizer Loc
 
 
 @{
@@ -9,7 +11,7 @@
 <h1>Tokens</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    
 </p>
 <table class="table">
     <thead>
@@ -26,22 +28,33 @@
     <form asp-action="SelectionAction">
     <tbody>
 @foreach (var item in Model) { 
+        
         <tr>
-
             <td>
+                <label for=@item.Id>
                 @Html.DisplayFor(modelItem => item.Token)
+                </label>
             </td>
             <td>
+                <label for=@item.Id>
                 @Html.DisplayFor(modelItem => item.UserName)
+                </label>
             </td>
             <td>
-                <input type="checkbox" id=@item.Id name="Tokens" value=@item.Id>
+                <label for=@item.Id>
+                <input type="checkbox" id="@item.Id" name="Tokens" value="@item.Id"/>
+                </label>
             </td>
+            
         </tr>
+        
 }
     </tbody>
     <div class="form-group">
-        <input type="submit" value="Select" class="btn btn-primary" />
+        <a asp-action="Create" class="btn btn-primary">Create</a>
+        <button name="Action" value="Enable" class="btn btn-primary">@Loc["Enable"]</button>
+        <button name="Action" value="Disable" class="btn btn-primary">@Loc["Disable"]</button>
+        <button name="Action" value="Delete" class="btn btn-primary">@Loc["Delete"]</button>
     </div>
     </form>
     <!--td>

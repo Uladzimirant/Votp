@@ -19,24 +19,50 @@ namespace Votp.Controllers.Admin
             _userService = userService;
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return RedirectToAction(nameof(Tokens));
         }
 
-        public ActionResult Tokens()
+        public IActionResult Tokens()
         {
             return View(_tokenService.GetTokens());
         }
 
-        public ActionResult Users()
+        public IActionResult Users()
         {
             return View(_userService.GetUsers());
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(TokenIDto dto)
+        {
+            _tokenService.CreateToken(dto);
+            return RedirectToAction(nameof(Tokens));
         }
 
         [HttpPost]
         public IActionResult SelectionAction([FromForm] SelectedTokensIDto selection)
         {
+            switch (selection.Action)
+            {
+                case "Delete":
+                    _tokenService.DeleteTokens(selection.Tokens);
+                    break;
+                case "Disable":
+                    _tokenService.DisableTokens(selection.Tokens);
+                    break;
+                case "Enable":
+                    _tokenService.EnableTokens(selection.Tokens);
+                    break;
+                default:
+                    throw new ArgumentException($"Unsupported button value: {selection.Action}");
+            }
             return RedirectToAction(nameof(Tokens));
         }
 

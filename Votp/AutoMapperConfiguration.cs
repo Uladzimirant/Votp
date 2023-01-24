@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Votp.DS.Database.Entities;
+using Votp.Models.Request;
 using Votp.Models.Response;
 
 namespace Votp
@@ -13,6 +14,8 @@ namespace Votp
                 .ForMember(d => d.Token, o => o.MapFrom(s => s.Value));
             CreateMap<User, UserODto>()
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Login));
+            CreateMap<TokenIDto, Token>()
+                .ForMember(d => d.Value, o => o.MapFrom(s => s.Token));
         }
     }
 }

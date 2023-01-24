@@ -12,5 +12,6 @@ namespace Votp.DS.Database
     {
         public DbSet<Token> Tokens { get; }
         public DbSet<User> Users { get; }
+        int SaveChanges();
     }
 }
