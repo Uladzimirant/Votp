@@ -1,8 +1,8 @@
 ﻿namespace Votp.Models.Request
 {
-    public class SelectedTokensIDto
+    public class SelectionIDto
     {
-        public List<int> Tokens { get; set; }
+        public IEnumerable<int> Selection { get; set; }
         public string Action { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 
 
 @{
-    ViewData["Title"] = "Tokens";
+    ViewData["Title"] = Loc["Tokens"];
 }
 
 <h1>Tokens</h1>
@@ -13,6 +13,7 @@
 <p>
     
 </p>
+<form asp-action="SelectionAction">
 <table class="table">
     <thead>
         <tr>
@@ -25,10 +26,8 @@
             <th></th>
         </tr>
     </thead>
-    <form asp-action="SelectionAction">
     <tbody>
 @foreach (var item in Model) { 
-        
         <tr>
             <td>
                 <label for=@item.Id>
@@ -42,12 +41,10 @@
             </td>
             <td>
                 <label for=@item.Id>
-                <input type="checkbox" id="@item.Id" name="Tokens" value="@item.Id"/>
+                        <input type="checkbox" id="@item.Id" name="Selection" value="@item.Id"/>
                 </label>
             </td>
-            
         </tr>
-        
 }
     </tbody>
     <div class="form-group">
@@ -56,10 +53,11 @@
         <button name="Action" value="Disable" class="btn btn-primary">@Loc["Disable"]</button>
         <button name="Action" value="Delete" class="btn btn-primary">@Loc["Delete"]</button>
     </div>
-    </form>
+
     <!--td>
         Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
         Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
         Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
     </td-->
 </table>
+</form>

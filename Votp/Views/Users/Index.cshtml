@@ -1,14 +1,15 @@
-﻿@model IEnumerable<Votp.Models.Response.UserODto>
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using Votp.Models.Response;
+@model IEnumerable<Votp.Models.Response.UserODto>
+@inject IViewLocalizer Loc
 
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = Loc["Users"];
 }
 
 <h1>Users</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<form asp-action="SelectionAction">
 <table class="table">
     <thead>
         <tr>
@@ -21,6 +22,7 @@
             <th></th>
         </tr>
     </thead>
+
     <tbody>
 @foreach (var item in Model) {
         <tr>
@@ -31,11 +33,16 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <label for=@item.Id>
+                        <input type="checkbox" id="@item.Id" name="Selection" value="@item.Id" />
+                </label>
             </td>
         </tr>
 }
     </tbody>
+    <div class="form-group">
+        <a asp-action="Create" class="btn btn-primary">@Loc["Add new user"]</a>
+        <button name="Action" value="Delete" class="btn btn-primary">@Loc["Delete"]</button>
+    </div>
 </table>
+</form>

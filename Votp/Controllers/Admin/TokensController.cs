@@ -6,32 +6,19 @@ using Votp.Services.Contracts;
 
 namespace Votp.Controllers.Admin
 {
-    public class AdminController : Controller
+    public class TokensController : Controller
     {
-        // GET: AdminController
-        private ILogger<AdminController> _l;
+        private ILogger<TokensController> _l;
         private ITokenService _tokenService;
-        private IUserService _userService;
-        public AdminController(ILogger<AdminController> l, ITokenService tokenService, IUserService userService)
+        public TokensController(ILogger<TokensController> l, ITokenService tokenService, IUserService userService)
         {
             _l = l;
             _tokenService = tokenService;
-            _userService = userService;
         }
 
         public IActionResult Index()
         {
-            return RedirectToAction(nameof(Tokens));
-        }
-
-        public IActionResult Tokens()
-        {
             return View(_tokenService.GetTokens());
-        }
-
-        public IActionResult Users()
-        {
-            return View(_userService.GetUsers());
         }
 
         public IActionResult Create()
@@ -43,27 +30,27 @@ namespace Votp.Controllers.Admin
         public IActionResult Create(TokenIDto dto)
         {
             _tokenService.CreateToken(dto);
-            return RedirectToAction(nameof(Tokens));
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public IActionResult SelectionAction([FromForm] SelectedTokensIDto selection)
+        public IActionResult SelectionAction([FromForm] SelectionIDto sel)
         {
-            switch (selection.Action)
+            switch (sel.Action)
             {
                 case "Delete":
-                    _tokenService.DeleteTokens(selection.Tokens);
+                    _tokenService.DeleteTokens(sel.Selection);
                     break;
                 case "Disable":
-                    _tokenService.DisableTokens(selection.Tokens);
+                    _tokenService.DisableTokens(sel.Selection);
                     break;
                 case "Enable":
-                    _tokenService.EnableTokens(selection.Tokens);
+                    _tokenService.EnableTokens(sel.Selection);
                     break;
                 default:
-                    throw new ArgumentException($"Unsupported button value: {selection.Action}");
+                    throw new ArgumentException($"Unsupported button value: {sel.Action}");
             }
-            return RedirectToAction(nameof(Tokens));
+            return RedirectToAction(nameof(Index));
         }
 
         //// GET: AdminController/Details/5

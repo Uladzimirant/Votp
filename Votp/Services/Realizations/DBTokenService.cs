@@ -28,6 +28,18 @@ namespace Votp.Services.Realizations
             catch (InvalidOperationException) { throw new Exception($"No or multiple user {dto.UserName} found"); }
         }
 
+        public void CreateUser(UserIDto dto)
+        {
+            var u = new User() { Login = dto.Name };
+            _db.Users.Add(u);
+            _db.SaveChanges();
+        }
+        public void DeleteUsers(IEnumerable<int> ids)
+        {
+            _db.Users.RemoveRange(_db.Users.Where(u => ids.Contains(u.Id)));
+            _db.SaveChanges();
+        }
+
         public void DeleteTokens(IEnumerable<int> ids)
         {
             _db.Tokens.RemoveRange(_db.Tokens.Where(token => ids.Contains(token.Id)));

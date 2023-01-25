@@ -68,7 +68,7 @@ namespace Votp
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Admin}/{action=Index}/{id?}");
+                pattern: "{controller=Tokens}/{action=Index}/{id?}");
 
             app.Run();
         }
