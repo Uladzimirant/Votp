@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using Votp.ATest;
+@using Votp.Models.Response;
+@model IEnumerable<UserResolverODto>
+@inject IViewLocalizer Loc
+
+
+@{
+    ViewData["Title"] = Loc["System"];
+}
+
+<h1>System configuration</h1>
+
+<p>
+
+</p>
+<div>
+    <div>
+        <h2>@Loc["User resolvers"]</h2>
+        <a asp-action="ResolverAdd">@Loc["Add new resolver"]</a>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Loc["Resolvers"]
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Name)
+                        </td>
+                        <td>
+                            @Html.ActionLink("ResolverEdit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("ResolverDetails", "Details", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <!--td>
+                Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td-->
+        </table>
+    </div>
+</div>
+

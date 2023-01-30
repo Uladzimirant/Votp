@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp", "Votp\Votp.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.DS.Database", "Votp.DS.Database\Votp.DS.Database.csproj", "{28A3AD9C-B99E-41D1-952F-2562988E3656}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.Utils", "Votp.Utils\Votp.Utils.csproj", "{007A11E6-42C4-48FE-9061-709D1F59FEBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Utils", "Votp.Utils\Votp.Utils.csproj", "{007A11E6-42C4-48FE-9061-709D1F59FEBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Votp.ATest;
 using Votp.DS.Database;
 using Votp.Services.Contracts;
 using Votp.Services.Realizations;
@@ -42,6 +43,8 @@ namespace Votp
             builder.Services.AddTransient<ITokenService, DBTokenService>();
             builder.Services.AddTransient<IUserService, DBTokenService>();
             builder.Services.AddTransient<ITokenCheckerService, TokenCheckerService>();
+
+            builder.Services.AddTransient<IUserResolverService, UserResolverService>();
 
             builder.Services.AddTransient<IViewLocalizer, PlaceholdLocalizator>();
 

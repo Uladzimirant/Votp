@@ -12,12 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Domain\" />
+    <ProjectReference Include="..\Votp.DS.Database\Votp.DS.Database.csproj" />
+    <ProjectReference Include="..\Votp.Utils\Votp.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Votp.DS.Database\Votp.DS.Database.csproj" />
-    <ProjectReference Include="..\Votp.Utils\Votp.Utils.csproj" />
+    <Folder Include="Models\Domain\" />
   </ItemGroup>
 
 </Project>

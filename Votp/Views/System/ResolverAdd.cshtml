@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using Votp.Models.Request;
+@model UserResolverIDto
+@inject IViewLocalizer Loc
+
+@{
+    ViewData["Title"] = Loc["Add resolver"];
+}
+
+<h1>Adding Resolver</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ResolverAdd">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Create" class="btn btn-primary">@Loc["Create"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">@Loc["Back"]</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
