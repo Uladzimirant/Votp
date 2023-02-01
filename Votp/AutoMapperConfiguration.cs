@@ -16,6 +16,9 @@ namespace Votp
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Login));
             CreateMap<TokenIDto, Token>()
                 .ForMember(d => d.Value, o => o.MapFrom(s => s.Token));
+
+            CreateMap<ResolverInfo, UserResolverODto>();
+            CreateMap<UserResolverIDto, ResolverInfo>();
         }
     }
 }

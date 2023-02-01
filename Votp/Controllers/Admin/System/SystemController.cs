@@ -1,24 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Votp.ATest;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Votp.DS.Database.Entities;
 using Votp.Models.Request;
 using Votp.Models.Response;
+using Votp.Services.Contracts.UserResolver;
 
 namespace Votp.WebPage.Admin.System.Controllers
 {
     public class SystemController : Controller
     {
         private readonly ILogger<SystemController> _l;
+        private readonly IMapper _mapper;
         private readonly IUserResolverService _userResolverService;
-        public SystemController(ILogger<SystemController> l, IUserResolverService resolverService)
+        public SystemController(ILogger<SystemController> l, IMapper mapper, IUserResolverService resolverService)
         {
             _l = l;
+            _mapper = mapper;
             _userResolverService = resolverService;
         }
 
         public IActionResult Index()
         {
             return View(_userResolverService.Resolvers.Select(
-                (resolver, i) => new UserResolverODto { Id = i, Name = resolver.ToString() ?? "Null" })); ;
+                (resolver, i) => new UserResolverODto { Id = i, Type = resolver.ToString() ?? "Null" })); ;
         }
         public IActionResult ResolverAdd() {
             return View();
@@ -26,7 +30,7 @@ namespace Votp.WebPage.Admin.System.Controllers
 
         [HttpPost]
         public IActionResult ResolverAdd(UserResolverIDto dto) {
-            _userResolverService.Add(dto.Name);
+            _userResolverService.AddResolver(_mapper.Map<ResolverInfo>(dto));
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using Votp.ATest;
 using Votp.DS.Database;
+using Votp.DS.Database.Entities;
 using Votp.Services.Contracts;
+using Votp.Services.Contracts.UserResolver;
 using Votp.Services.Realizations;
+using Votp.Services.Realizations.DatabaseUserResolver;
+using Votp.Services.Realizations.UserResolver;
 
 namespace Votp
 {
@@ -39,18 +43,26 @@ namespace Votp
             string? s = builder.Configuration.GetConnectionString("Default");
             builder.Services.AddDbContext<IVotpDbContext, VotpDbContext>(o => o.UseSqlServer(s));
 
+            builder.Services.AddSingleton<IResolverFactoryContainerService<User>>(p =>
+                new UserResolverFactoryContainerService().RegisterDatabaseUserResolver(p)
+                );
 
             builder.Services.AddTransient<ITokenService, DBTokenService>();
-            builder.Services.AddTransient<IUserService, DBTokenService>();
+            builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<ITokenCheckerService, TokenCheckerService>();
 
-            builder.Services.AddTransient<IUserResolverService, UserResolverService>();
 
             builder.Services.AddTransient<IViewLocalizer, PlaceholdLocalizator>();
 
+
+
+
+
+            builder.Services.AddTransient<IUserResolverService, UserResolverService>();
+
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
             builder.Services.AddControllersWithViews();
-
+            
 
             var app = builder.Build();
 

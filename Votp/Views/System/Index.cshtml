@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization;
-@using Votp.ATest;
 @using Votp.Models.Response;
 @model IEnumerable<UserResolverODto>
 @inject IViewLocalizer Loc
@@ -35,7 +34,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(model => item.Name)
+                            @Html.DisplayFor(model => item.Type)
                         </td>
                         <td>
                             @Html.ActionLink("ResolverEdit", "Edit", new { id = item.Id }) |

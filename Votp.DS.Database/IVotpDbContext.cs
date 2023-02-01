@@ -10,6 +10,7 @@ namespace Votp.DS.Database
 {
     public interface IVotpDbContext
     {
+        public DbSet<ResolverInfo> Resolvers { get; }
         public DbSet<Token> Tokens { get; }
         public DbSet<User> Users { get; }
         int SaveChanges();

@@ -8,6 +8,7 @@ namespace Votp.DS.Database
     {
         public VotpDbContext(DbContextOptions o) : base(o)
         {
+            if (!Global.WasDBDeleted) { Database.EnsureDeleted(); Global.WasDBDeleted = true; }
             if (Database.EnsureCreated())
             {
                 var r = Randomizer.Instance;
@@ -25,6 +26,7 @@ namespace Votp.DS.Database
                 SaveChanges();
             }
         }
+        public virtual DbSet<ResolverInfo> Resolvers { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
 
@@ -52,6 +54,11 @@ namespace Votp.DS.Database
                 ent.Property(e => e.Id);
                 ent.Property(e => e.Value)
                 .IsRequired();
+            });
+
+            modelBuilder.Entity<ResolverInfo>(ent =>
+            {
+                ent.HasKey(e => e.Id);
             });
         }
     }
