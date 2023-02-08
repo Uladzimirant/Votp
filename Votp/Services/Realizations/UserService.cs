@@ -15,7 +15,7 @@ namespace Votp.Services.Realizations
             _mapper = mapper;
         }
 
-        public List<UserODto> GetUsers()
+        public async Task<List<UserODto>> GetUsers()
         {
             return _userResolverService.GetUsers().Select(_mapper.Map<UserODto>).ToList();
         }

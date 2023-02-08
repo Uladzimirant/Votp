@@ -16,9 +16,9 @@ namespace Votp.Controllers.Admin
             _tokenService = tokenService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_tokenService.GetTokens());
+            return View(await _tokenService.GetTokens());
         }
 
         public IActionResult Create()
@@ -27,25 +27,25 @@ namespace Votp.Controllers.Admin
         }
 
         [HttpPost]
-        public IActionResult Create(TokenIDto dto)
+        public async Task<IActionResult> Create(TokenIDto dto)
         {
-            _tokenService.CreateToken(dto);
+            await _tokenService.CreateToken(dto);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public IActionResult SelectionAction([FromForm] SelectionIDto sel)
+        public async Task<IActionResult> SelectionAction([FromForm] SelectionIDto sel)
         {
             switch (sel.Action)
             {
                 case "Delete":
-                    _tokenService.DeleteTokens(sel.Selection);
+                    await _tokenService.DeleteTokens(sel.Selection);
                     break;
                 case "Disable":
-                    _tokenService.DisableTokens(sel.Selection);
+                    await _tokenService.DisableTokens(sel.Selection);
                     break;
                 case "Enable":
-                    _tokenService.EnableTokens(sel.Selection);
+                    await _tokenService.EnableTokens(sel.Selection);
                     break;
                 default:
                     throw new ArgumentException($"Unsupported button value: {sel.Action}");

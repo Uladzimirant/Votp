@@ -13,6 +13,6 @@ namespace Votp.DS.Database
         public DbSet<ResolverInfo> Resolvers { get; }
         public DbSet<Token> Tokens { get; }
         public DbSet<User> Users { get; }
-        int SaveChanges();
+        DbContext AsContext() { return (DbContext)this; }
     }
 }

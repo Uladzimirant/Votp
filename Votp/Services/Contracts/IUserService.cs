@@ -4,6 +4,6 @@ namespace Votp.Services.Contracts
 {
     public interface IUserService
     {
-        public List<UserODto> GetUsers();
+        public Task<List<UserODto>> GetUsers();
     }
 }

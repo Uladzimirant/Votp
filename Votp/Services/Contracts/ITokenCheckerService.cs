@@ -2,6 +2,6 @@
 {
     public interface ITokenCheckerService
     {
-        public bool Check(string userm, string token);
+        public Task<bool> Check(string userm, string token);
     }
 }

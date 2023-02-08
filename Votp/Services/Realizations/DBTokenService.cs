@@ -15,7 +15,7 @@ namespace Votp.Services.Realizations
         {
         }
 
-        public void CreateToken(TokenIDto dto)
+        public async Task CreateToken(TokenIDto dto)
         {
             try
             {
@@ -23,47 +23,47 @@ namespace Votp.Services.Realizations
                 var t = _mapper.Map<Token>(dto);
                 t.User = user;
                 _db.Tokens.Add(t);
-                _db.SaveChanges();
+                await _db.AsContext().SaveChangesAsync();
             }
             catch (InvalidOperationException) { throw new Exception($"No or multiple user {dto.UserName} found"); }
         }
 
-        public void CreateUser(UserIDto dto)
+        public async Task CreateUser(UserIDto dto)
         {
             var u = new User() { Login = dto.Name };
             _db.Users.Add(u);
-            _db.SaveChanges();
+            await _db.AsContext().SaveChangesAsync();
         }
-        public void DeleteUsers(IEnumerable<int> ids)
+        public async Task DeleteUsers(IEnumerable<int> ids)
         {
             _db.Users.RemoveRange(_db.Users.Where(u => ids.Contains(u.Id)));
-            _db.SaveChanges();
+            await _db.AsContext().SaveChangesAsync();
         }
 
-        public void DeleteTokens(IEnumerable<int> ids)
+        public async Task DeleteTokens(IEnumerable<int> ids)
         {
             _db.Tokens.RemoveRange(_db.Tokens.Where(token => ids.Contains(token.Id)));
-            _db.SaveChanges();
+            await _db.AsContext().SaveChangesAsync();
         }
 
-        public void DisableTokens(IEnumerable<int> ids)
+        public async Task DisableTokens(IEnumerable<int> ids)
         {
             return;
         }
 
-        public void EnableTokens(IEnumerable<int> ids)
+        public async Task EnableTokens(IEnumerable<int> ids)
         {
             return;
         }
 
-        public List<TokenODto> GetTokens()
+        public async Task<List<TokenODto>> GetTokens()
         {
-            return _db.Tokens.Include(o => o.User).Select(_mapper.Map<TokenODto>).ToList();
+            return (await _db.Tokens.Include(o => o.User).ToListAsync()).Select(_mapper.Map<TokenODto>).ToList();
         }
 
-        public List<UserODto> GetUsers()
+        public async Task<List<UserODto>> GetUsers()
         {
-            return _db.Users.Select(_mapper.Map<UserODto>).ToList();
+            return (await _db.Users.ToListAsync()).Select(_mapper.Map<UserODto>).ToList();
         }
     }
 }

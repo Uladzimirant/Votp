@@ -21,13 +21,13 @@ namespace Votp.Services.Realizations
             _l = l;
             _factoryContainer = urfc;
             _db = db;
-            FillResolvers();
+            FillResolvers().Wait();
         }
-        private void FillResolvers() {
+        private async Task FillResolvers() {
             //_resolvers.AddRange(
             //    _db.Resolvers.Select(o => _factoryContainer.GetFactory(o.ResolverType).CreateResolver(null))
             //    );
-            foreach (var r in _db.Resolvers)
+            await foreach (ResolverInfo r in _db.Resolvers)
             {
                 var f = _factoryContainer.GetFactory(r.Type);
                 var res = f.CreateResolver(null);
@@ -40,13 +40,13 @@ namespace Votp.Services.Realizations
             get { return _resolvers; }
         }
 
-        public void AddResolver(ResolverInfo info)
+        public async Task AddResolver(ResolverInfo info)
         {
             var factory = _factoryContainer.GetFactory(info.Type.ToString());
             var res = factory.CreateResolver(null);
             _resolvers.Add(res);
             _db.Resolvers.Add(info);
-            _db.SaveChanges();
+            await _db.AsContext().SaveChangesAsync();
         }
 
         public IEnumerable<User> GetUsers()

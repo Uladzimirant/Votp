@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Votp.DS.Database;
 using Votp.Models.Request;
 using Votp.Services.Contracts;
 
@@ -9,15 +10,17 @@ namespace Votp.Controllers.Admin
     {
         private ILogger<UsersController> _l;
         private IUserService _userService;
-        public UsersController(ILogger<UsersController> l, IUserService userService)
+        private IVotpDbContext _tempDb;
+        public UsersController(ILogger<UsersController> l, IUserService userService, IVotpDbContext db)
         {
             _l = l;
             _userService = userService;
+            _tempDb = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_userService.GetUsers());
+            return View(await _userService.GetUsers());
         }
 
         public IActionResult Create()
@@ -26,22 +29,22 @@ namespace Votp.Controllers.Admin
         }
 
         [HttpPost]
-        public IActionResult Create(UserIDto dto)
+        public async Task<IActionResult> Create(UserIDto dto)
         {
             //Temp method, so 
-            var uservice = (Votp.Services.Realizations.DBTokenService)_userService;
-            uservice.CreateUser(dto);
+            _tempDb.Users.Add(new DS.Database.Entities.User() { Login = dto.Name });
+            await _tempDb.AsContext().SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public IActionResult SelectionAction([FromForm] SelectionIDto sel)
+        public async Task<IActionResult> SelectionAction([FromForm] SelectionIDto sel)
         {
             var uservice = (Votp.Services.Realizations.DBTokenService)_userService;
             switch (sel.Action)
             {
                 case "Delete":
-                    uservice.DeleteUsers(sel.Selection);
+                    await uservice.DeleteUsers(sel.Selection);
                     break;
                 default:
                     throw new ArgumentException($"Unsupported button value: {sel.Action}");

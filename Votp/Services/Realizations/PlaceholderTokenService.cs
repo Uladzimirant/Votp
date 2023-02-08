@@ -16,34 +16,35 @@ namespace Votp.Services.Realizations
             _users = r.GenerateSequence(3, 6, i => new UserODto() { Name = r.NextWord(5), Email = r.NextWord(5) + "@mail.ru" }).ToList();
         }
 
-        public void CreateToken(TokenIDto dto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteTokens(IEnumerable<int> ids)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DisableTokens(IEnumerable<int> ids)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EnableTokens(IEnumerable<int> ids)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<TokenODto> GetTokens()
-        {
-            return _tokens;
-        }
 
         public List<UserODto> GetUsers()
         {
             return _users;
+        }
+
+        public async Task CreateToken(TokenIDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeleteTokens(IEnumerable<int> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DisableTokens(IEnumerable<int> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task EnableTokens(IEnumerable<int> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<TokenODto>> GetTokens()
+        {
+            return _tokens;
         }
     }
 }
