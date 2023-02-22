@@ -6,24 +6,27 @@ namespace Votp.DS.Database
 {
     public class VotpDbContext : DbContext, IVotpDbContext
     {
-        public VotpDbContext(DbContextOptions o) : base(o)
+        public VotpDbContext(DbContextOptions o, bool initBase = true) : base(o)
         {
-            if (!Global.WasDBDeleted) { Database.EnsureDeleted(); Global.WasDBDeleted = true; }
-            if (Database.EnsureCreated())
+            if (initBase)
             {
-                var r = Randomizer.Instance;
-                var users = Enumerable.Range(0, 5)
-                    .Select(i => new User()
-                    {
-                        Login = r.NextWord(5),
-                        Tokens =
-                        Enumerable.Range(1, r.Next(1, 3))
-                        .Select(i => new Token() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now }).ToList()
-                    }
-                    ).ToList();
-                Users!.AddRange(users);
+                if (!Global.WasDBDeleted) { Database.EnsureDeleted(); Global.WasDBDeleted = true; }
+                if (Database.EnsureCreated())
+                {
+                    var r = Randomizer.Instance;
+                    var users = Enumerable.Range(0, 5)
+                        .Select(i => new User()
+                        {
+                            Login = r.NextWord(5),
+                            Tokens =
+                            Enumerable.Range(1, r.Next(1, 3))
+                            .Select(i => new Token() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now }).ToList()
+                        }
+                        ).ToList();
+                    Users!.AddRange(users);
 
-                SaveChanges();
+                    SaveChanges();
+                }
             }
         }
         public virtual DbSet<ResolverInfo> Resolvers { get; set; }
