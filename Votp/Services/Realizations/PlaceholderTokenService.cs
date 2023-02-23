@@ -1,6 +1,7 @@
-﻿using Votp.Models.Request;
+﻿using Votp.Contracts.Services;
+using Votp.DS.Database.Entities;
+using Votp.Models.Request;
 using Votp.Models.Response;
-using Votp.Services.Contracts;
 using Votp.Utils;
 
 namespace Votp.Services.Realizations
@@ -22,7 +23,7 @@ namespace Votp.Services.Realizations
             return _users;
         }
 
-        public async Task CreateToken(TokenIDto dto)
+        public async Task CreateToken(Token dto)
         {
             throw new NotImplementedException();
         }
@@ -42,9 +43,9 @@ namespace Votp.Services.Realizations
             throw new NotImplementedException();
         }
 
-        public async Task<List<TokenODto>> GetTokens()
+        public async Task<List<Token>> GetTokens()
         {
-            return _tokens;
+            throw new NotImplementedException();
         }
     }
 }

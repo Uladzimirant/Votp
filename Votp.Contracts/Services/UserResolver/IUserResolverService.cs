@@ -1,7 +1,6 @@
-﻿
-using Votp.DS.Database.Entities;
+﻿using Votp.DS.Database.Entities;
 
-namespace Votp.Services.Contracts.UserResolver
+namespace Votp.Contracts.Services.UserResolver
 {
     public interface IUserResolverService
     {

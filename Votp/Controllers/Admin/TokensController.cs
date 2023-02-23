@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Votp.Contracts.Services;
+using Votp.DS.Database.Entities;
 using Votp.Models.Request;
 using Votp.Models.Response;
-using Votp.Services.Contracts;
 
 namespace Votp.Controllers.Admin
 {
@@ -10,15 +12,17 @@ namespace Votp.Controllers.Admin
     {
         private ILogger<TokensController> _l;
         private ITokenService _tokenService;
-        public TokensController(ILogger<TokensController> l, ITokenService tokenService, IUserService userService)
+        private readonly IMapper _m;
+        public TokensController(ILogger<TokensController> l, IMapper mapper, ITokenService tokenService, IUserService userService)
         {
             _l = l;
+            _m = mapper;
             _tokenService = tokenService;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _tokenService.GetTokens());
+            return View((await _tokenService.GetTokens()).Select(_m.Map<TokenODto>));
         }
 
         public IActionResult Create()
@@ -29,7 +33,7 @@ namespace Votp.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(TokenIDto dto)
         {
-            await _tokenService.CreateToken(dto);
+            await _tokenService.CreateToken(_m.Map<Token>(dto));
             return RedirectToAction(nameof(Index));
         }
 

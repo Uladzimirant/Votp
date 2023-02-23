@@ -1,8 +1,8 @@
-﻿namespace Votp.Services.Contracts.UserResolver
+﻿namespace Votp.Contracts.Services.UserResolver
 {
     public interface IResolverFactoryContainerService<T>
     {
-        public void RegisterFactory(string uniqueName,IResolverFactory<T> f);
+        public void RegisterFactory(string uniqueName, IResolverFactory<T> f);
         public IResolverFactory<T> GetFactory(string name);
     }
 }

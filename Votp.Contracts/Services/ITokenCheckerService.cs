@@ -1,4 +1,4 @@
-﻿namespace Votp.Services.Contracts
+﻿namespace Votp.Contracts.Services
 {
     public interface ITokenCheckerService
     {

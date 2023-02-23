@@ -5,11 +5,11 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using System.Data;
 using Votp;
+using Votp.Contracts.Services;
 using Votp.Controllers.Admin;
 using Votp.DS.Database;
 using Votp.DS.Database.Entities;
 using Votp.Models.Request;
-using Votp.Services.Contracts;
 using Votp.Services.Realizations;
 
 namespace Tests.Votp
@@ -27,7 +27,7 @@ namespace Tests.Votp
             IUserService userService = dbservice;
 
             TokensController tokensController
-                = new TokensController(lfact.CreateLogger<TokensController>(), tokenService, userService);
+                = new TokensController(lfact.CreateLogger<TokensController>(), map, tokenService, userService);
             return tokensController;
         }
 

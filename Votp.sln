@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.DS.Database", "Votp.DS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Utils", "Votp.Utils\Votp.Utils.csproj", "{007A11E6-42C4-48FE-9061-709D1F59FEBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Votp", "Tests.Votp\Tests.Votp.csproj", "{D7EA993F-1AE8-4ECC-BE58-89241E7ACB3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Votp", "Tests.Votp\Tests.Votp.csproj", "{D7EA993F-1AE8-4ECC-BE58-89241E7ACB3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.Contracts", "Votp.Contracts\Votp.Contracts.csproj", "{22692537-DECF-4315-BDE5-C18A77052D94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.DS.Entities", "Votp.DS.Entities\Votp.DS.Entities.csproj", "{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{D7EA993F-1AE8-4ECC-BE58-89241E7ACB3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7EA993F-1AE8-4ECC-BE58-89241E7ACB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7EA993F-1AE8-4ECC-BE58-89241E7ACB3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22692537-DECF-4315-BDE5-C18A77052D94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22692537-DECF-4315-BDE5-C18A77052D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22692537-DECF-4315-BDE5-C18A77052D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22692537-DECF-4315-BDE5-C18A77052D94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

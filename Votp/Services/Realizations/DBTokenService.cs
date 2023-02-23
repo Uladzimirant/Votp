@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Votp.Contracts.Services;
 using Votp.DS.Database;
 using Votp.DS.Database.Entities;
 using Votp.Models.Request;
 using Votp.Models.Response;
-using Votp.Services.Contracts;
 
 namespace Votp.Services.Realizations
 {
@@ -15,22 +15,22 @@ namespace Votp.Services.Realizations
         {
         }
 
-        public async Task CreateToken(TokenIDto dto)
+        public async Task CreateToken(Token input)
         {
             try
             {
-                var user = _db.Users.Single(u => u.Login == dto.UserName);
-                var t = _mapper.Map<Token>(dto);
+                var user = _db.Users.Single(u => u.Login == input.User.Login);
+                var t = _mapper.Map<Token>(input);
                 t.User = user;
                 _db.Tokens.Add(t);
                 await _db.AsContext().SaveChangesAsync();
             }
-            catch (InvalidOperationException) { throw new Exception($"No or multiple user {dto.UserName} found"); }
+            catch (InvalidOperationException) { throw new Exception($"No or multiple user {input.User.Login} found"); }
         }
 
-        public async Task CreateUser(UserIDto dto)
+        public async Task CreateUser(User input)
         {
-            var u = new User() { Login = dto.Name };
+            var u = new User() { Login = input.Login };
             _db.Users.Add(u);
             await _db.AsContext().SaveChangesAsync();
         }
@@ -56,14 +56,14 @@ namespace Votp.Services.Realizations
             return;
         }
 
-        public async Task<List<TokenODto>> GetTokens()
+        public async Task<List<Token>> GetTokens()
         {
-            return (await _db.Tokens.Include(o => o.User).ToListAsync()).Select(_mapper.Map<TokenODto>).ToList();
+            return (await _db.Tokens.Include(o => o.User).ToListAsync()).ToList();
         }
 
-        public async Task<List<UserODto>> GetUsers()
+        public async Task<List<User>> GetUsers()
         {
-            return (await _db.Users.ToListAsync()).Select(_mapper.Map<UserODto>).ToList();
+            return (await _db.Users.ToListAsync()).ToList();
         }
     }
 }

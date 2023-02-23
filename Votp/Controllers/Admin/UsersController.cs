@@ -1,26 +1,30 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Votp.Contracts.Services;
 using Votp.DS.Database;
 using Votp.Models.Request;
-using Votp.Services.Contracts;
+using Votp.Models.Response;
 
 namespace Votp.Controllers.Admin
 {
     public class UsersController : Controller
     {
         private ILogger<UsersController> _l;
+        private readonly IMapper _m;
         private IUserService _userService;
         private IVotpDbContext _tempDb;
-        public UsersController(ILogger<UsersController> l, IUserService userService, IVotpDbContext db)
+        public UsersController(ILogger<UsersController> l, IMapper mapper, IUserService userService, IVotpDbContext db)
         {
             _l = l;
+            _m = mapper;
             _userService = userService;
             _tempDb = db;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _userService.GetUsers());
+            return View((await _userService.GetUsers()).Select(_m.Map<UserODto>));
         }
 
         public IActionResult Create()

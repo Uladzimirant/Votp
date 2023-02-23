@@ -1,5 +1,5 @@
-﻿using Votp.DS.Database.Entities;
-using Votp.Services.Contracts.UserResolver;
+﻿using Votp.Contracts.Services.UserResolver;
+using Votp.DS.Database.Entities;
 
 namespace Votp.Services.Realizations.UserResolver
 {

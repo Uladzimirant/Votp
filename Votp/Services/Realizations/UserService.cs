@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Votp.Models.Response;
-using Votp.Services.Contracts;
-using Votp.Services.Contracts.UserResolver;
+using Votp.Contracts.Services;
+using Votp.Contracts.Services.UserResolver;
+using Votp.DS.Database.Entities;
 
 namespace Votp.Services.Realizations
 {
@@ -15,9 +15,9 @@ namespace Votp.Services.Realizations
             _mapper = mapper;
         }
 
-        public async Task<List<UserODto>> GetUsers()
+        public async Task<List<User>> GetUsers()
         {
-            return _userResolverService.GetUsers().Select(_mapper.Map<UserODto>).ToList();
+            return _userResolverService.GetUsers().ToList();
         }
     }
 }

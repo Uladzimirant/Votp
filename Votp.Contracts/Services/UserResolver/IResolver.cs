@@ -1,4 +1,4 @@
-﻿namespace Votp.Services.Contracts.UserResolver
+﻿namespace Votp.Contracts.Services.UserResolver
 {
     public interface IResolver<T>
     {
