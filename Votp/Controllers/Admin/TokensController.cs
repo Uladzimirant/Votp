@@ -11,7 +11,7 @@ namespace Votp.Controllers.Admin
     public class TokensController : Controller
     {
         private ILogger<TokensController> _l;
-        private ITokenService _tokenService;
+        private readonly ITokenService _tokenService;
         private readonly IMapper _m;
         public TokensController(ILogger<TokensController> l, IMapper mapper, ITokenService tokenService, IUserService userService)
         {
