@@ -15,9 +15,9 @@ namespace Votp.Services.Realizations
             _db = db;
         }
 
-        public async Task<bool> Check(string user, string token)
+        public async Task<bool> Check(string user, string code)
         {
-            bool res = await _db.Tokens.Include(o => o.User).Where(o => o.Value == token && o.User.Login == user).CountAsync() > 0;
+            bool res = (await _db.Tokens.Include(o => o.User).Where(o => o.User.Login == user).SingleAsync()).Check(code);
             _l.LogInformation($"User '{user}' validation - {res}");
             return res;
         }

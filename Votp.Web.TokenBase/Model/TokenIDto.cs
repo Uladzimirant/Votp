@@ -1,4 +1,4 @@
-﻿namespace Votp.Models.Request
+﻿namespace Votp.Web.TokenBase.Model
 {
     public class TokenIDto
     {

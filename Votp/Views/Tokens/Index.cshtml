@@ -21,6 +21,9 @@
                 @Html.DisplayNameFor(model => model.Token)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.TokenType)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th></th>
@@ -32,6 +35,11 @@
             <td>
                 <label for=@item.Id>
                 @Html.DisplayFor(modelItem => item.Token)
+                </label>
+            </td>
+            <td>
+                <label for=@item.Id>
+                    @Html.DisplayFor(modelItem => item.TokenType)
                 </label>
             </td>
             <td>

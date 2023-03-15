@@ -64,7 +64,7 @@ namespace Tests.Votp
                 TokensController controller = CreateTokenController(context);
 
                 //act
-                controller.Create(new TokenIDto() { Token = token, UserName = username }).Wait();
+                controller.Create(new TokenIDto() { Value = token, UserName = username }).Wait();
 
                 //assert
                 Assert.Contains(context.Tokens, e => e.Value == token);
@@ -85,7 +85,7 @@ namespace Tests.Votp
                 //assert
                 Assert.Throws<AggregateException>(() =>
                 {
-                    controller.Create(new TokenIDto() { Token = token, UserName = username }).Wait();
+                    controller.Create(new TokenIDto() { Value = token, UserName = username }).Wait();
                 });
             }
         }

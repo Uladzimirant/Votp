@@ -7,14 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
+    <Content Include="Views\SystemTimeToken\Add.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TimeToken\Votp.DS.TToken.csproj" />
-    <ProjectReference Include="..\Votp.Contracts\Votp.Contracts.csproj" />
-    <ProjectReference Include="..\Votp.DS.Entities\Votp.DS.Entities.csproj" />
-    <ProjectReference Include="..\Votp.Utils\Votp.Utils.csproj" />
+    <ProjectReference Include="..\Votp.Web.TokenBase\Votp.Web.TokenBase.csproj" />
+	  <EmbeddedResource Include="Views\**\*.cshtml" />
   </ItemGroup>
 
+	
+	
 </Project>

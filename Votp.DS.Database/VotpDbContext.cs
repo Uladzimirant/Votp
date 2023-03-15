@@ -1,33 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Votp.Contracts.Services;
 using Votp.DS.Database.Entities;
 using Votp.Utils;
+using Votp.DS.TToken;
 
 namespace Votp.DS.Database
 {
     public class VotpDbContext : DbContext, IVotpDbContext
     {
-        public VotpDbContext(DbContextOptions o, bool initBase = true) : base(o)
+        private ITokenLibService _tokenLibs;
+        public VotpDbContext(DbContextOptions o, ITokenLibService tokenLibs) : base(o)
         {
-            if (initBase)
-            {
-                if (!Global.WasDBDeleted) { Database.EnsureDeleted(); Global.WasDBDeleted = true; }
-                if (Database.EnsureCreated())
-                {
-                    var r = Randomizer.Instance;
-                    var users = Enumerable.Range(0, 5)
-                        .Select(i => new User()
-                        {
-                            Login = r.NextWord(5),
-                            Tokens =
-                            Enumerable.Range(1, r.Next(1, 3))
-                            .Select(i => new Token() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now }).ToList()
-                        }
-                        ).ToList();
-                    Users!.AddRange(users);
-
-                    SaveChanges();
-                }
-            }
+            _tokenLibs = tokenLibs;
+            Database.EnsureCreated();
         }
         public virtual DbSet<ResolverInfo> Resolvers { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -49,11 +34,15 @@ namespace Votp.DS.Database
                 .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
+            foreach (var assembly in _tokenLibs.TokenLibAssemblies)
+            {
+                modelBuilder.ApplyConfigurationsFromAssembly(assembly);
+            }
+
             modelBuilder.Entity<Token>(ent =>
             {
                 ent.ToTable("Token");
                 ent.HasKey(ent => ent.Id);
-
                 ent.Property(e => e.Id);
                 ent.Property(e => e.Value)
                 .IsRequired();
@@ -63,6 +52,7 @@ namespace Votp.DS.Database
             {
                 ent.HasKey(e => e.Id);
             });
+
         }
     }
 }

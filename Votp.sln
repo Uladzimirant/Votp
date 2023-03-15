@@ -11,9 +11,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Utils", "Votp.Utils\Vo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Votp", "Tests.Votp\Tests.Votp.csproj", "{D7EA993F-1AE8-4ECC-BE58-89241E7ACB3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.Contracts", "Votp.Contracts\Votp.Contracts.csproj", "{22692537-DECF-4315-BDE5-C18A77052D94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Contracts", "Votp.Contracts\Votp.Contracts.csproj", "{22692537-DECF-4315-BDE5-C18A77052D94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.DS.Entities", "Votp.DS.Entities\Votp.DS.Entities.csproj", "{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.DS.Entities", "Votp.DS.Entities\Votp.DS.Entities.csproj", "{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.DS.TToken", "TimeToken\Votp.DS.TToken.csproj", "{C34E0640-FBC2-4F76-A317-D1E187F29FB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TToken", "TToken", "{F650654D-F957-4983-8B8D-7A342EAF54A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Web.TToken", "Votp.Web.TToken\Votp.Web.TToken.csproj", "{35962B25-636C-43B9-A988-55767C5C93C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Web.TokenBase", "Votp.Web.TokenBase\Votp.Web.TokenBase.csproj", "{738DFBA4-DA6F-4450-902C-FE2D3AD3920C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TokenBase", "TokenBase", "{90401587-4251-4462-8724-1CE202C55722}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +55,26 @@ Global
 		{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B2D7AD0-E98E-416D-8ED4-69A2C7F2878F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C34E0640-FBC2-4F76-A317-D1E187F29FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C34E0640-FBC2-4F76-A317-D1E187F29FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C34E0640-FBC2-4F76-A317-D1E187F29FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C34E0640-FBC2-4F76-A317-D1E187F29FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35962B25-636C-43B9-A988-55767C5C93C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35962B25-636C-43B9-A988-55767C5C93C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35962B25-636C-43B9-A988-55767C5C93C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35962B25-636C-43B9-A988-55767C5C93C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{738DFBA4-DA6F-4450-902C-FE2D3AD3920C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{738DFBA4-DA6F-4450-902C-FE2D3AD3920C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{738DFBA4-DA6F-4450-902C-FE2D3AD3920C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{738DFBA4-DA6F-4450-902C-FE2D3AD3920C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C34E0640-FBC2-4F76-A317-D1E187F29FB0} = {F650654D-F957-4983-8B8D-7A342EAF54A5}
+		{35962B25-636C-43B9-A988-55767C5C93C8} = {F650654D-F957-4983-8B8D-7A342EAF54A5}
+		{738DFBA4-DA6F-4450-902C-FE2D3AD3920C} = {90401587-4251-4462-8724-1CE202C55722}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7DFDF871-3F48-402D-A1FA-2D6ABB0205EA}

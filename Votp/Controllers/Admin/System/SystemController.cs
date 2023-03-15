@@ -5,7 +5,7 @@ using Votp.DS.Database.Entities;
 using Votp.Models.Request;
 using Votp.Models.Response;
 
-namespace Votp.WebPage.Admin.System.Controllers
+namespace Votp.Web.Admin.System.Controllers
 {
     public class SystemController : Controller
     {
