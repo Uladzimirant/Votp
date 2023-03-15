@@ -58,7 +58,7 @@ namespace Tests.Votp
         {
             //arrange
             var options = new DbContextOptionsBuilder<VotpDbContext>().UseInMemoryDatabase(databaseName: "Votp").Options;
-            using (var context = new VotpDbContext(options, false))
+            using (var context = new VotpDbContext(options, Mock.Of<ITokenLibService>()))
             {
                 DefaultFillDB(context);
                 TokensController controller = CreateTokenController(context);
@@ -77,7 +77,7 @@ namespace Tests.Votp
         {
             //arrange
             var options = new DbContextOptionsBuilder<VotpDbContext>().UseInMemoryDatabase(databaseName: "Votp").Options;
-            using (var context = new VotpDbContext(options, false))
+            using (var context = new VotpDbContext(options, Mock.Of<ITokenLibService>()))
             {
                 DefaultFillDB(context);
                 TokensController controller = CreateTokenController(context);
