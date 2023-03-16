@@ -25,9 +25,14 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal -c Release
+      run: dotnet test --no-build --verbosity normal -c Release --results-directory ~/test-results
       
     - name: Generate Artifacts
       uses: actions/upload-artifact@v3
       with:
-        path: Votp/bin/Release/net6.0
+        path: Votp/bin/Release/net6.0        
+        
+    - name: Generate Test Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        path: ~/test-results
