@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimeToken\Votp.DS.TToken.csproj" />
+    <ProjectReference Include="..\Votp.DS.TToken\Votp.DS.TToken.csproj" />
     <ProjectReference Include="..\Votp.Contracts\Votp.Contracts.csproj" />
     <ProjectReference Include="..\Votp.DS.Database\Votp.DS.Database.csproj" />
     <ProjectReference Include="..\Votp.DS.Entities\Votp.DS.Entities.csproj" />

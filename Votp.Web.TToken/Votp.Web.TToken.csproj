@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimeToken\Votp.DS.TToken.csproj" />
+    <ProjectReference Include="..\Votp.DS.TToken\Votp.DS.TToken.csproj" />
     <ProjectReference Include="..\Votp.Web.TokenBase\Votp.Web.TokenBase.csproj" />
 	  <EmbeddedResource Include="Views\**\*.cshtml" />
   </ItemGroup>
