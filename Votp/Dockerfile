@@ -11,13 +11,14 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Votp/Votp.csproj", "Votp/"]
-COPY ["TimeToken/Votp.DS.TToken.csproj", "TimeToken/"]
+COPY ["Votp.DS.TToken/Votp.DS.TToken.csproj", "Votp.DS.TToken/"]
 COPY ["Votp.DS.Entities/Votp.DS.Entities.csproj", "Votp.DS.Entities/"]
 COPY ["Votp.Contracts/Votp.Contracts.csproj", "Votp.Contracts/"]
 COPY ["Votp.DS.Database/Votp.DS.Database.csproj", "Votp.DS.Database/"]
 COPY ["Votp.Utils/Votp.Utils.csproj", "Votp.Utils/"]
 COPY ["Votp.Web.TToken/Votp.Web.TToken.csproj", "Votp.Web.TToken/"]
 COPY ["Votp.Web.TokenBase/Votp.Web.TokenBase.csproj", "Votp.Web.TokenBase/"]
+COPY ["Votp.Services/Votp.Services.csproj", "Votp.Services/"]
 RUN dotnet restore "Votp/Votp.csproj"
 COPY . .
 WORKDIR "/src/Votp"
