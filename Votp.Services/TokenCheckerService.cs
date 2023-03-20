@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Votp.Contracts.Services;
 using Votp.DS.Database;
 
-namespace Votp.Services.Realizations
+namespace Votp.Services
 {
     public class TokenCheckerService : ITokenCheckerService
     {

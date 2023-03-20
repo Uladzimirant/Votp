@@ -2,7 +2,7 @@
 using Votp.DS.Database;
 using Votp.DS.Database.Entities;
 
-namespace Votp.Services.Realizations
+namespace Votp.Services
 {
     public class PlaceholderDatabaseUserResolver : IResolver<User>
     {

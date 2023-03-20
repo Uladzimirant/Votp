@@ -5,6 +5,7 @@ using Votp.Contracts.Services;
 using Votp.DS.Database;
 using Votp.Models.Request;
 using Votp.Models.Response;
+using Votp.Services;
 
 namespace Votp.Controllers.Admin
 {
@@ -44,7 +45,7 @@ namespace Votp.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> SelectionAction([FromForm] SelectionIDto sel)
         {
-            var uservice = (Votp.Services.Realizations.DBTokenService)_userService;
+            var uservice = (DBTokenService)_userService;
             switch (sel.Action)
             {
                 case "Delete":

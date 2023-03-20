@@ -1,8 +1,9 @@
-﻿using Votp.Contracts.Services.UserResolver;
+﻿using Microsoft.Extensions.Logging;
+using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Database;
 using Votp.DS.Database.Entities;
 
-namespace Votp.Services.Realizations
+namespace Votp.Services
 {
     public class UserResolverService : IUserResolverService
     {
@@ -23,7 +24,8 @@ namespace Votp.Services.Realizations
             _db = db;
             FillResolvers().Wait();
         }
-        private async Task FillResolvers() {
+        private async Task FillResolvers()
+        {
             //_resolvers.AddRange(
             //    _db.Resolvers.Select(o => _factoryContainer.GetFactory(o.ResolverType).CreateResolver(null))
             //    );

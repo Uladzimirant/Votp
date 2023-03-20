@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Votp.DS.Database;
 
-namespace Votp.Services.Realizations
+namespace Votp.Services
 {
     public abstract class BaseDBService
     {

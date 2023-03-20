@@ -1,11 +1,11 @@
 ﻿using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Database.Entities;
 
-namespace Votp.Services.Realizations.UserResolver
+namespace Votp.Services.UserResolver
 {
     public class UserResolverFactoryContainerService : IResolverFactoryContainerService<User>
     {
-        private Dictionary<string, IResolverFactory<User>> factories = new Dictionary<string, IResolverFactory<User>>(); 
+        private Dictionary<string, IResolverFactory<User>> factories = new Dictionary<string, IResolverFactory<User>>();
 
         public IResolverFactory<User> GetFactory(string name)
         {

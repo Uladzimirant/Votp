@@ -1,13 +1,15 @@
-﻿using Votp.Contracts.Services.UserResolver;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Database;
 using Votp.DS.Database.Entities;
 
-namespace Votp.Services.Realizations.DatabaseUserResolver
+namespace Votp.Services.DatabaseUserResolver
 {
     public class DatabaseUserResolver : IResolver<User>
     {
         IServiceProvider _provider;
-        public DatabaseUserResolver(IServiceProvider provider) {
+        public DatabaseUserResolver(IServiceProvider provider)
+        {
             _provider = provider;
         }
         public IEnumerable<User> GetResolvedList()
@@ -16,7 +18,7 @@ namespace Votp.Services.Realizations.DatabaseUserResolver
             {
                 var db = scope.ServiceProvider.GetRequiredService<IVotpDbContext>();
                 return db.Users.ToList();
-            }   
+            }
         }
     }
 }

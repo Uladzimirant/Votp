@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Web.TokenBase", "Votp.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TokenBase", "TokenBase", "{90401587-4251-4462-8724-1CE202C55722}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.Services", "Votp.Services\Votp.Services.csproj", "{DA4EBBB0-D079-43E0-9BDF-33FCB999F40F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{738DFBA4-DA6F-4450-902C-FE2D3AD3920C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{738DFBA4-DA6F-4450-902C-FE2D3AD3920C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{738DFBA4-DA6F-4450-902C-FE2D3AD3920C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA4EBBB0-D079-43E0-9BDF-33FCB999F40F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA4EBBB0-D079-43E0-9BDF-33FCB999F40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA4EBBB0-D079-43E0-9BDF-33FCB999F40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA4EBBB0-D079-43E0-9BDF-33FCB999F40F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

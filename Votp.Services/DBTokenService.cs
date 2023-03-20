@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Votp.Contracts.Services;
 using Votp.DS.Database;
 using Votp.DS.Database.Entities;
-using Votp.Models.Request;
-using Votp.Models.Response;
 
-namespace Votp.Services.Realizations
+namespace Votp.Services
 {
     public class DBTokenService : BaseDBService, ITokenService, IUserService
     {

@@ -4,7 +4,7 @@ using Votp.Models.Request;
 using Votp.Models.Response;
 using Votp.Utils;
 
-namespace Votp.Services.Realizations
+namespace Votp.Services
 {
     public class PlaceholderTokenService : ITokenService
     {

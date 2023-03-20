@@ -27,6 +27,7 @@
     <ProjectReference Include="..\Votp.Contracts\Votp.Contracts.csproj" />
     <ProjectReference Include="..\Votp.DS.Database\Votp.DS.Database.csproj" />
     <ProjectReference Include="..\Votp.DS.Entities\Votp.DS.Entities.csproj" />
+    <ProjectReference Include="..\Votp.Services\Votp.Services.csproj" />
     <ProjectReference Include="..\Votp.Utils\Votp.Utils.csproj" />
     <ProjectReference Include="..\Votp.Web.TToken\Votp.Web.TToken.csproj" />
   </ItemGroup>
