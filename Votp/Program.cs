@@ -76,8 +76,10 @@ namespace Votp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            string? s = builder.Configuration.GetConnectionString("Default");
-
+            string? s = 
+                Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? 
+                builder.Configuration.GetConnectionString("Default");
+            
             builder.Services.AddDbContext<IVotpDbContext, VotpDbContext>(o => o.UseSqlServer(s));
 
 
@@ -136,9 +138,15 @@ namespace Votp
             {
                 using (var db = app.Services.CreateScope().ServiceProvider.GetRequiredService<IVotpDbContext>() as VotpDbContext)
                 {
-                    if (db != null)
+                    try
                     {
-                        InitializeDB(db);
+                        if (db != null)
+                        {
+                            InitializeDB(db);
+                        }
+                    } catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
                     }
                 }
 
