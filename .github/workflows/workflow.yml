@@ -24,6 +24,13 @@ jobs:
       with:
         dotnet-version: 6.0.x
         
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+        
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0
       with:
@@ -34,7 +41,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal -c Release --results-directory ./test-results
+      run: dotnet test --no-build --verbosity normal -c Release --results-directory ./test-results --logger "trx;logfilename=mytests.trx"
       
     - name: Generate Artifacts
       uses: actions/upload-artifact@v3
