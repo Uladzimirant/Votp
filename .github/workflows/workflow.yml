@@ -41,7 +41,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal -c Release --results-directory test-results
+      run: dotnet test --no-build --verbosity normal -c Release --results-directory ./test-results --logger "trx;logfilename=mytests.trx"
       
     - name: Generate Artifacts
       uses: actions/upload-artifact@v3
@@ -51,4 +51,4 @@ jobs:
     - name: Generate Test Artifacts
       uses: actions/upload-artifact@v3
       with:
-        path: test-results
+        path: ./test-results
