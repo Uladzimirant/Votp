@@ -2,7 +2,7 @@
 using Votp.DS.Database;
 using Votp.DS.Database.Entities;
 
-namespace Votp.Services.DatabaseUserResolver
+namespace Votp.UserResolver.InnerDatabase
 {
     public class DatabaseUserResolverFactory : IResolverFactory<User>
     {
@@ -12,7 +12,7 @@ namespace Votp.Services.DatabaseUserResolver
         {
             _provider = provider;
         }
-        public IResolver<User> CreateResolver(IResolverInfo<User> info)
+        public IResolver<User> CreateResolver(ResolverInfo info)
         {
             return new DatabaseUserResolver(_provider);
         }

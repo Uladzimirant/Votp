@@ -9,6 +9,6 @@ namespace Votp.DS.Database.Entities
     public class ResolverInfo
     {
         public int Id { get; set; }
-        public string Type { get; set; }
+        public string ResolverName { get; set; }
     }
 }

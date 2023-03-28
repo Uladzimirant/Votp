@@ -10,13 +10,13 @@ namespace Votp.DS.Database.Entities
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime? RegistrationTime { get; set; }
-        public virtual bool CheckCode(string code)
+        public virtual bool CheckCodeRaw(string code)
         {
             return false;
         }
         public virtual bool Check(string code)
         {
-            return CheckCode(code);
+            return CheckCodeRaw(code);
         }
     }
 }

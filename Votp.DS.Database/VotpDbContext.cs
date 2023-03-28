@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Votp.Contracts.Services;
 using Votp.DS.Database.Entities;
-using Votp.Utils;
-using Votp.DS.TToken;
+using Votp.UserResolver.Ldap;
 
 namespace Votp.DS.Database
 {
     public class VotpDbContext : DbContext, IVotpDbContext
     {
-        private ITokenLibService _tokenLibs;
-        public VotpDbContext(DbContextOptions o, ITokenLibService tokenLibs) : base(o)
+        private IDBLibService _libs;
+        public VotpDbContext(DbContextOptions o, IDBLibService libs) : base(o)
         {
-            _tokenLibs = tokenLibs;
-            Database.EnsureCreated();
+            _libs = libs;
         }
         public virtual DbSet<ResolverInfo> Resolvers { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -34,11 +32,6 @@ namespace Votp.DS.Database
                 .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            foreach (var assembly in _tokenLibs.TokenLibAssemblies)
-            {
-                modelBuilder.ApplyConfigurationsFromAssembly(assembly);
-            }
-
             modelBuilder.Entity<Token>(ent =>
             {
                 ent.ToTable("Token");
@@ -52,7 +45,15 @@ namespace Votp.DS.Database
             {
                 ent.HasKey(e => e.Id);
             });
+            modelBuilder.Entity<LdapUserResolverInfo>(ent =>
+            {
+                ent.HasBaseType<ResolverInfo>();
+            });
 
+            foreach (var assembly in _libs.LibAssemblies)
+            {
+                modelBuilder.ApplyConfigurationsFromAssembly(assembly);
+            }
         }
     }
 }

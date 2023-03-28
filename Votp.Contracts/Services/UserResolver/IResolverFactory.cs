@@ -1,7 +1,9 @@
-﻿namespace Votp.Contracts.Services.UserResolver
+﻿using Votp.DS.Database.Entities;
+
+namespace Votp.Contracts.Services.UserResolver
 {
     public interface IResolverFactory<T>
     {
-        IResolver<T> CreateResolver(IResolverInfo<T> info);
+        IResolver<T> CreateResolver(ResolverInfo info);
     }
 }

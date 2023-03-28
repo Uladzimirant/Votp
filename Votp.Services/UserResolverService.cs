@@ -31,8 +31,8 @@ namespace Votp.Services
             //    );
             await foreach (ResolverInfo r in _db.Resolvers)
             {
-                var f = _factoryContainer.GetFactory(r.Type);
-                var res = f.CreateResolver(null);
+                var f = _factoryContainer.GetFactory(r.ResolverName);
+                var res = f.CreateResolver(r);
                 _resolvers.Add(res);
             }
         }
@@ -44,8 +44,8 @@ namespace Votp.Services
 
         public async Task AddResolver(ResolverInfo info)
         {
-            var factory = _factoryContainer.GetFactory(info.Type.ToString());
-            var res = factory.CreateResolver(null);
+            var factory = _factoryContainer.GetFactory(info.ResolverName.ToString());
+            var res = factory.CreateResolver(info);
             _resolvers.Add(res);
             _db.Resolvers.Add(info);
             await _db.AsContext().SaveChangesAsync();

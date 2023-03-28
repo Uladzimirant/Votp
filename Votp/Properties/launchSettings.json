@@ -20,6 +20,9 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "DB_CONNECTION_STRING": "Server=host.docker.internal\\MSSQLSERVER01;Database=VotpTestDatabase;User ID=adm;Password=12345678;TrustServerCertificate=True;"
+      },
       "publishAllPorts": true,
       "useSSL": true
     }

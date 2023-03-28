@@ -5,8 +5,8 @@ using Votp.DS.TToken;
 
 namespace Votp
 {
-    public class RegistratorService : ITokenLibService
+    public class RegistratorService : IDBLibService
     {
-        public ICollection<Assembly> TokenLibAssemblies { get; set; } = new List<Assembly>();
+        public ICollection<Assembly> LibAssemblies { get; set; } = new List<Assembly>();
     }
 }

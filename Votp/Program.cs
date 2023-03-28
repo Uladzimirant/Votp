@@ -16,13 +16,14 @@ using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Database;
 using Votp.DS.Database.Entities;
 using Votp.Services;
-using Votp.Services.DatabaseUserResolver;
+using Votp.UserResolver.InnerDatabase;
 using Votp.Services.UserResolver;
 using Microsoft.AspNetCore.Components.Forms;
 using Votp.Utils;
 using System.Reflection;
 using Votp.Web.TToken;
 using Votp.DS.TToken;
+using Votp.UserResolver.Ldap;
 
 namespace Votp
 {
@@ -31,7 +32,7 @@ namespace Votp
         public static void InitializeDB(VotpDbContext db)
         {
             db.Database.EnsureDeleted();
-            if (db.Database.EnsureCreated())
+            db.Database.EnsureCreated();
             {
                 var r = Randomizer.Instance;
                 var users = Enumerable.Range(0, 5)
@@ -44,7 +45,8 @@ namespace Votp
                     }
                     ).ToList();
                 db.Users!.AddRange(users);
-                db.Resolvers.Add(new ResolverInfo() { Type = "Database" });
+                db.Resolvers.Add(new ResolverInfo() { ResolverName = "Database" });
+                db.Resolvers.Add(new LdapUserResolverInfo() { ResolverName = "Ldap", Server = "localhost", Port = 10389, ConnectionLogin = "cn=admin,dc=example,dc=org", ConnectionPassword = "admin" }) ;
 
                 db.SaveChanges();
             } 
@@ -74,6 +76,8 @@ namespace Votp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            IDBLibService dbLibService = new RegistratorService();
+
 
             // Add services to the container.
             string? s = 
@@ -84,7 +88,9 @@ namespace Votp
 
 
             builder.Services.AddSingleton<IResolverFactoryContainerService<User>>(p =>
-                new UserResolverFactoryContainerService().RegisterDatabaseUserResolver(p)
+                new UserResolverFactoryContainerService()
+                .RegisterDatabaseUserResolver(dbLibService, p)
+                .RegisterLdapUserResolver(dbLibService)
                 );
 
             builder.Services.AddTransient<ITokenService, DBTokenService>();
@@ -107,11 +113,11 @@ namespace Votp
             {
                 typeof(AutoMapperProfile)
             };
-            ITokenLibService tokenLibService = new RegistratorService();
+            
 
-            builder.Services.AddTimedToken(assemblies, mapperTypes, tokenLibService);
+            builder.Services.AddTimedToken(assemblies, mapperTypes, dbLibService);
 
-            builder.Services.AddSingleton<ITokenLibService>(tokenLibService);
+            builder.Services.AddSingleton<IDBLibService>(dbLibService);
             builder.Services.AddAutoMapper(mapperTypes.ToArray());
 
             var mvcBuilder = builder.Services.AddControllersWithViews();
@@ -131,10 +137,7 @@ namespace Votp
 
             var app = builder.Build();
 
-
-
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
                 using (var db = app.Services.CreateScope().ServiceProvider.GetRequiredService<IVotpDbContext>() as VotpDbContext)
                 {
@@ -144,16 +147,22 @@ namespace Votp
                         {
                             InitializeDB(db);
                         }
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.ToString());
                     }
                 }
+            }
 
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

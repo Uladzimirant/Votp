@@ -2,8 +2,8 @@
 
 namespace Votp.Contracts.Services
 {
-    public interface ITokenLibService
+    public interface IDBLibService
     {
-        ICollection<Assembly> TokenLibAssemblies { get; }
+        ICollection<Assembly> LibAssemblies { get; }
     }
 }

@@ -14,11 +14,11 @@ namespace Votp.Web.TToken
     public static class RegistrationExtention
     {
         public static IServiceCollection AddTimedToken(this IServiceCollection service,
-            ICollection<Assembly> assembliesList, ICollection<Type> mapperOptList, ITokenLibService tokenLibConcreteObject)
+            ICollection<Assembly> assembliesList, ICollection<Type> mapperOptList, IDBLibService tokenLibConcreteObject)
         {
             assembliesList.Add(typeof(SystemTimeTokenController).Assembly);
             mapperOptList.Add(typeof(TimedTokenMapperProfile));
-            tokenLibConcreteObject.TokenLibAssemblies.Add(typeof(TimeToken).Assembly);
+            tokenLibConcreteObject.LibAssemblies.Add(typeof(TimeToken).Assembly);
             return service;
         }
     }
