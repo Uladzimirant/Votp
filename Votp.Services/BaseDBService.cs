@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
-using Votp.DS.Database;
+using Votp.Contracts;
 
 namespace Votp.Services
 {

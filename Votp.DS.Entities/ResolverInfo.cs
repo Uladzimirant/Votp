@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Votp.DS.Database.Entities
+namespace Votp.DS.Entities
 {
     public class ResolverInfo
     {

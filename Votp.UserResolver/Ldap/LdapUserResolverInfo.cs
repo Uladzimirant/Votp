@@ -1,4 +1,4 @@
-﻿using Votp.DS.Database.Entities;
+﻿using Votp.DS.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 using System.Security;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Votp.Contracts.Services.UserResolver;
-using Votp.DS.Database.Entities;
+using Votp.DS.Entities;
 
 namespace Votp.UserResolver.Ldap
 {

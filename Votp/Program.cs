@@ -14,16 +14,19 @@ using Microsoft.Extensions.Localization;
 using Votp.Contracts.Services;
 using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Database;
-using Votp.DS.Database.Entities;
+using Votp.DS.Entities;
 using Votp.Services;
 using Votp.UserResolver.InnerDatabase;
 using Votp.Services.UserResolver;
 using Microsoft.AspNetCore.Components.Forms;
 using Votp.Utils;
 using System.Reflection;
-using Votp.Web.TToken;
-using Votp.DS.TToken;
 using Votp.UserResolver.Ldap;
+using Votp.Tokens.Time.Controllers;
+using Votp.Contracts;
+using Votp.Tokens.Time.Entities;
+using Votp.Tokens.Time;
+using Votp.Tokens.Totp.Entities;
 
 namespace Votp
 {
@@ -41,12 +44,13 @@ namespace Votp
                         Login = r.NextWord(5),
                         Tokens =
                         Enumerable.Range(1, r.Next(1, 3))
-                        .Select(j => i == 0 ? new TimeToken() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now, Prefix = "1111" } : new Token() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now }).ToList()
+                        .Select(j => i == 0 ? new TimeToken() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now, Prefix = "1111" } :
+                        new TotpToken() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now, Key = Convert.FromBase64String("VGhlIHF1aWNrIGJyb3duIGZveCA=") } as Token).ToList()
                     }
                     ).ToList();
                 db.Users!.AddRange(users);
                 db.Resolvers.Add(new ResolverInfo() { ResolverName = "Database" });
-                db.Resolvers.Add(new LdapUserResolverInfo() { ResolverName = "Ldap", Server = "localhost", Port = 10389, ConnectionLogin = "cn=admin,dc=example,dc=org", ConnectionPassword = "admin" }) ;
+                //db.Resolvers.Add(new LdapUserResolverInfo() { ResolverName = "Ldap", Server = "localhost", Port = 10389, ConnectionLogin = "cn=admin,dc=example,dc=org", ConnectionPassword = "admin" }) ;
 
                 db.SaveChanges();
             } 
@@ -96,6 +100,7 @@ namespace Votp
             builder.Services.AddTransient<ITokenService, DBTokenService>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<ITokenCheckerService, TokenCheckerService>();
+            builder.Services.AddTransient<IByteGeneratorService, ByteGeneratorService>();
 
 
             builder.Services.AddTransient<IViewLocalizer, PlaceholdLocalizator>();
@@ -107,7 +112,7 @@ namespace Votp
 
             List<Assembly> assemblies = new List<Assembly>()
             {
-                typeof(Votp.Web.TToken.Controllers.SystemTimeTokenController).Assembly
+                typeof(SystemTimeTokenController).Assembly
             };
             List<Type> mapperTypes = new List<Type>()
             {

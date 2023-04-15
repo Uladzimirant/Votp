@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Votp.DS.Database.Entities;
+using Votp.DS.Entities;
 using Votp.Models.Request;
 using Votp.Models.Response;
 

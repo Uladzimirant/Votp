@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Votp.Contracts;
 using Votp.Contracts.Services.UserResolver;
-using Votp.DS.Database;
-using Votp.DS.Database.Entities;
+using Votp.DS.Entities;
 
 namespace Votp.UserResolver.InnerDatabase
 {

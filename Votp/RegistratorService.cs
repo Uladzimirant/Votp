@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Votp.Contracts.Services;
-using Votp.DS.TToken;
 
 namespace Votp
 {

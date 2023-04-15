@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Votp.DS.Entities;
 
-namespace Votp.DS.Database.Entities
+namespace Votp.DS.Entities
 {
     public class User
     {

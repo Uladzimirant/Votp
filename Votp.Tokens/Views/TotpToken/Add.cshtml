@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using Votp.Tokens.Totp.Models;
+@model TotpTokenIDto
+@inject IViewLocalizer Loc
+
+@{
+    ViewData["Title"] = Loc["Add TOTP token"];
+}
+
+<h1>Adding Totp Token</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prefix" class="control-label"></label>
+                <input asp-for="Prefix" class="form-control" />
+                <span asp-validation-for="Prefix" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Step" class="control-label"></label>
+                <input asp-for="Step" class="form-control"/>
+                <span asp-validation-for="Step" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TokenSize" class="control-label"></label>
+                <input asp-for="TokenSize" class="form-control" />
+                <span asp-validation-for="TokenSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Add" class="btn btn-primary">@Loc["Add"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Tokens" asp-action="Index">@Loc["Back to token list"]</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

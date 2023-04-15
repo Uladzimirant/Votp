@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Votp.Contracts.Services;
-using Votp.DS.Database.Entities;
+using Votp.Contracts;
 using Votp.UserResolver.Ldap;
+using Votp.DS.Entities;
 
 namespace Votp.DS.Database
 {

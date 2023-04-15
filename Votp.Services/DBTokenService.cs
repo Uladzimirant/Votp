@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Votp.Contracts;
 using Votp.Contracts.Services;
 using Votp.DS.Database;
-using Votp.DS.Database.Entities;
+using Votp.DS.Entities;
 
 namespace Votp.Services
 {

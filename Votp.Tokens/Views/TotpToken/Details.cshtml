@@ -1,0 +1,22 @@
+﻿@using Votp.Tokens.Totp.Models;
+@model TotpTokenODto
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Loc
+
+@{
+    ViewData["Title"] = Loc["Details"] + " - " + Loc["Totp token"];
+}
+
+<h1>@Loc["Totp token"]</h1>
+
+<img src="data:image;base64,@Model.QRImageBase64">
+
+<div>
+    <a asp-controller="Tokens" asp-action="Index">@Loc["Back to token list"]</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

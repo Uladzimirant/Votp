@@ -1,4 +1,4 @@
-﻿using Votp.DS.Database.Entities;
+﻿using Votp.DS.Entities;
 using Votp.Contracts.Services.UserResolver;
 using Votp.Contracts.Services;
 

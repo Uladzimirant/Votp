@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Votp.DS.Database.Entities;
+using Votp.DS.Entities;
 
-namespace Votp.DS.Database
+namespace Votp.Contracts
 {
     public interface IVotpDbContext
     {

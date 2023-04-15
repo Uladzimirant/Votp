@@ -9,7 +9,7 @@ using Votp;
 using Votp.Contracts.Services;
 using Votp.Controllers.Admin;
 using Votp.DS.Database;
-using Votp.DS.Database.Entities;
+using Votp.DS.Entities;
 using Votp.Models.Request;
 
 namespace Tests.Votp

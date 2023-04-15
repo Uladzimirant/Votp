@@ -2,7 +2,7 @@
 using System.Net;
 using System.Security;
 using Votp.Contracts.Services.UserResolver;
-using Votp.DS.Database.Entities;
+using Votp.DS.Entities;
 
 namespace Votp.UserResolver.Ldap
 {

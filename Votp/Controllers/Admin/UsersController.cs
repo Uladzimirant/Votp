@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Votp.Contracts;
 using Votp.Contracts.Services;
-using Votp.DS.Database;
+using Votp.DS.Entities;
 using Votp.Models.Request;
 using Votp.Models.Response;
 using Votp.Services;
@@ -37,7 +38,7 @@ namespace Votp.Controllers.Admin
         public async Task<IActionResult> Create(UserIDto dto)
         {
             //Temp method, so 
-            _tempDb.Users.Add(new DS.Database.Entities.User() { Login = dto.Name });
+            _tempDb.Users.Add(new User() { Login = dto.Name });
             await _tempDb.AsContext().SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
