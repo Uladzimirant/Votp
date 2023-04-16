@@ -32,30 +32,6 @@ namespace Votp
 {
     public class Program
     {
-        public static void InitializeDB(VotpDbContext db)
-        {
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
-            {
-                var r = Randomizer.Instance;
-                var users = Enumerable.Range(0, 5)
-                    .Select(i => new User()
-                    {
-                        Login = r.NextWord(5),
-                        Tokens =
-                        Enumerable.Range(1, r.Next(1, 3))
-                        .Select(j => i == 0 ? new TimeToken() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now, Prefix = "1111" } :
-                        new TotpToken() { Value = r.NextAlphaNum(3), RegistrationTime = DateTime.Now, Key = Convert.FromBase64String("VGhlIHF1aWNrIGJyb3duIGZveCA=") } as Token).ToList()
-                    }
-                    ).ToList();
-                db.Users!.AddRange(users);
-                db.Resolvers.Add(new ResolverInfo() { ResolverName = "Database" });
-                //db.Resolvers.Add(new LdapUserResolverInfo() { ResolverName = "Ldap", Server = "localhost", Port = 10389, ConnectionLogin = "cn=admin,dc=example,dc=org", ConnectionPassword = "admin" }) ;
-
-                db.SaveChanges();
-            } 
-        }
-
         public class PlaceholdLocalizator : IViewLocalizer
         {
             public LocalizedHtmlString this[string name] => new LocalizedHtmlString(name, name);
@@ -82,13 +58,17 @@ namespace Votp
             var builder = WebApplication.CreateBuilder(args);
             IDBLibService dbLibService = new RegistratorService();
 
-
+            
             // Add services to the container.
             string? s = 
                 Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? 
                 builder.Configuration.GetConnectionString("Default");
-            
+            string? sUsers =
+                Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ??
+                builder.Configuration.GetConnectionString("DefaultUsers");
+
             builder.Services.AddDbContext<IVotpDbContext, VotpDbContext>(o => o.UseSqlServer(s));
+            builder.Services.AddDbContext<IInnerUsersDBContext, InnerUsersDBContext>(o => o.UseSqlServer(sUsers));
 
 
             builder.Services.AddSingleton<IResolverFactoryContainerService<User>>(p =>
@@ -144,20 +124,7 @@ namespace Votp
 
             if (app.Environment.IsDevelopment())
             {
-                using (var db = app.Services.CreateScope().ServiceProvider.GetRequiredService<IVotpDbContext>() as VotpDbContext)
-                {
-                    try
-                    {
-                        if (db != null)
-                        {
-                            InitializeDB(db);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                    }
-                }
+                DebugInitializer.InitializeDatabases(app.Services);
             }
 
             // Configure the HTTP request pipeline.

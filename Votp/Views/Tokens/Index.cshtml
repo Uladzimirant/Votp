@@ -26,6 +26,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Locked)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -45,6 +48,11 @@
             <td>
                 <label for=@item.Id>
                 @Html.DisplayFor(modelItem => item.UserName)
+                </label>
+            </td>
+            <td>
+                <label for=@item.Id>
+                @Html.DisplayFor(modelItem => item.Locked)
                 </label>
             </td>
             <td>

@@ -6,6 +6,7 @@
         public string Token { get; set; }
         public string TokenType { get; set; }
         public string UserName { get; set; }
+        public bool Locked { get; set; }
         public DateTime? RegistrationTime { get; set; }
     }
 }

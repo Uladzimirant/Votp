@@ -5,9 +5,10 @@ namespace Votp.DS.Entities
     public class Token
     {
         public int Id { get; set; }
-        public string Value { get; set; }
+        public string UserName { get; set; }
+        [NotMapped]
         public User User { get; set; }
-        public bool? Locked { get; set; }
+        public bool? Locked { get; set; } = false;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime? RegistrationTime { get; set; }

@@ -11,6 +11,5 @@ namespace Votp.DS.Entities
     {
         public int Id { get; set; }
         public string Login { get; set; }
-        public List<Token> Tokens { get; set; }
     }
 }

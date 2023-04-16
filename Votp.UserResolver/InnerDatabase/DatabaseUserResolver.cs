@@ -16,7 +16,7 @@ namespace Votp.UserResolver.InnerDatabase
         {
             using (var scope = _provider.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<IVotpDbContext>();
+                var db = scope.ServiceProvider.GetRequiredService<IInnerUsersDBContext>();
                 return db.Users.ToList();
             }
         }
