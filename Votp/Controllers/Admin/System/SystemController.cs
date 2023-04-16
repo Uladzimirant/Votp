@@ -4,6 +4,8 @@ using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Entities;
 using Votp.Models.Request;
 using Votp.Models.Response;
+using Votp.UserResolver.InnerDatabase;
+using Votp.UserResolver.Ldap;
 
 namespace Votp.Web.Admin.System.Controllers
 {
@@ -22,15 +24,32 @@ namespace Votp.Web.Admin.System.Controllers
         public IActionResult Index()
         {
             return View(_userResolverService.Resolvers.Select(
-                (resolver, i) => new UserResolverODto { Id = i, Type = resolver.ToString() ?? "Null" })); ;
+                (resolver, i) =>
+                {
+                    var dto = _mapper.Map<UserResolverODto>(resolver);
+                    dto.Id = i;
+                    return dto;
+                })); 
         }
-        public IActionResult ResolverAdd() {
+        public IActionResult ResolverAdd()
+        {
+            return View();
+        }
+        public IActionResult ResolverAddLdap() {
             return View();
         }
 
         [HttpPost]
-        public IActionResult ResolverAdd(UserResolverIDto dto) {
-            _userResolverService.AddResolver(_mapper.Map<ResolverInfo>(dto));
+        public IActionResult ResolverAdd(UserResolverDatabaseIDto dto) {
+            if (_userResolverService.Resolvers.Any(e => e is DatabaseUserResolver)) return RedirectToAction(nameof(Index));
+            _userResolverService.AddResolver(_mapper.Map<DatabaseUserResolverInfo>(dto));
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public IActionResult ResolverAddLdap(UserResolverLdapIDto dto)
+        {
+            var info = _mapper.Map<LdapUserResolverInfo>(dto);
+            _userResolverService.AddResolver(info);
             return RedirectToAction(nameof(Index));
         }
 
@@ -39,8 +58,7 @@ namespace Votp.Web.Admin.System.Controllers
         }
 
         public IActionResult ResolverDelete(int id) {
-            _userResolverService.Resolvers.Remove(
-                _userResolverService.Resolvers.Select((r, i) => new { resolver = r, i = i }).Where(o => o.i == id).Single().resolver);
+            _userResolverService.RemoveResolver(id);
             return RedirectToAction(nameof(Index));
         }
     }

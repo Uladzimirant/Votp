@@ -81,7 +81,7 @@ namespace Tests.Votp
             TokensController controller = CreateTokenController(out var list);
 
             //act
-            controller.Create(new TokenIDto() { Value = token, UserName = username }).Wait();
+            controller.Create(new TokenIDto() { Name = token, UserName = username }).Wait();
 
             //assert
             Assert.Contains(list, e => e.Value == token);

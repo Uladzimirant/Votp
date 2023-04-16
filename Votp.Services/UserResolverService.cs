@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Votp.Contracts;
 using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Entities;
@@ -31,7 +32,7 @@ namespace Votp.Services
             //    );
             await foreach (ResolverInfo r in _db.Resolvers)
             {
-                var f = _factoryContainer.GetFactory(r.ResolverName);
+                var f = _factoryContainer.GetFactory(r.Name);
                 var res = f.CreateResolver(r);
                 _resolvers.Add(res);
             }
@@ -44,11 +45,16 @@ namespace Votp.Services
 
         public async Task AddResolver(ResolverInfo info)
         {
-            var factory = _factoryContainer.GetFactory(info.ResolverName.ToString());
+            var factory = _factoryContainer.GetFactory(info.Name.ToString());
             var res = factory.CreateResolver(info);
             _resolvers.Add(res);
             _db.Resolvers.Add(info);
             await _db.AsContext().SaveChangesAsync();
+        }
+
+        public async Task RemoveResolver(int id)
+        {
+            await _db.Resolvers.Select(r => r.Id == id).ExecuteDeleteAsync();
         }
 
         public IEnumerable<User> GetUsers()
@@ -58,5 +64,7 @@ namespace Votp.Services
                 (users, resolver) => users.Concat(resolver.GetResolvedList())
                 );
         }
+
+
     }
 }

@@ -36,12 +36,12 @@ namespace Votp
                         {
                             tokens.AddRange(Enumerable.Range(1, r.Next(1, 3))
                                     .Select(j => j == 1 ?
-                                    new TimeToken() { UserName = user.Login, RegistrationTime = DateTime.Now, Prefix = "1111" } :
-                                    new TotpToken() { UserName = user.Login, RegistrationTime = DateTime.Now, Prefix = "1111", Key = Convert.FromBase64String("VGhlIHF1aWNrIGJyb3duIGZveCA=") } as Token)
+                                    new TimeToken() { Name = r.NextWord(7), UserName = user.Login, RegistrationTime = DateTime.Now, Prefix = "1111" } :
+                                    new TotpToken() { Name = r.NextWord(7), UserName = user.Login, RegistrationTime = DateTime.Now, Prefix = "1111", Key = Convert.FromBase64String("VGhlIHF1aWNrIGJyb3duIGZveCA=") } as Token)
                                     .ToList());
                         }
                         dbMain.Tokens.AddRange(tokens);
-                        dbMain.Resolvers.Add(new ResolverInfo() { ResolverName = "Database" });
+                        dbMain.Resolvers.Add(new ResolverInfo() { Name = "Database" });
                         //db.Resolvers.Add(new LdapUserResolverInfo() { ResolverName = "Ldap", Server = "localhost", Port = 10389, ConnectionLogin = "cn=admin,dc=example,dc=org", ConnectionPassword = "admin" }) ;
 
                         dbMain.SaveChanges();

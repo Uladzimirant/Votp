@@ -9,6 +9,5 @@ namespace Votp.UserResolver.InnerDatabase
 {
     public class DatabaseUserResolverInfo : ResolverInfo
     {
-        
     }
 }

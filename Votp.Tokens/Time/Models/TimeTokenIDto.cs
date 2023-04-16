@@ -9,6 +9,5 @@ namespace Votp.Tokens.Time.Models
 {
     public class TimeTokenIDto : TokenIDto
     {
-        public string Prefix { get; set; }
     }
 }

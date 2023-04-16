@@ -8,18 +8,30 @@ namespace Votp.UserResolver.Ldap
 {
     public class LdapUserResolver : IResolver<User>
     {
-        private LdapConnection _connection;
+        //private LdapConnection _connection;
 
         private LdapDirectoryIdentifier _ldapAddress;
         private NetworkCredential _credential;
 
-        private string filter = "(objectClass=inetOrgPerson)";
-        private string[] attributesToReturn = { "uid" };
-        private string dname = "dc=example,dc=org";
+        private string _filter = "(objectClass=inetOrgPerson)";
+        private string[] _attributesToReturn = { "uid" };
+        private string _dname = "dc=example,dc=org";
 
-        public LdapUserResolver(LdapDirectoryIdentifier address, NetworkCredential credential) {
+        public LdapDirectoryIdentifier LDAPAddress { get => _ldapAddress; }
+
+        public LdapUserResolver(LdapDirectoryIdentifier address, NetworkCredential credential)
+        {
             _ldapAddress = address;
             _credential = credential;
+        }
+
+        public LdapUserResolver(LdapDirectoryIdentifier address, NetworkCredential credential, string filter, string attributesMap, string domainName)
+        {
+            _ldapAddress = address;
+            _credential = credential;
+            _filter = filter;
+            _attributesToReturn = new string[] { "uid" }; //todo
+            _dname = domainName;
         }
 
         public IEnumerable<User> GetResolvedList()
@@ -55,7 +67,7 @@ namespace Votp.UserResolver.Ldap
 
 
 
-                SearchRequest searchRequest = new SearchRequest(dname, filter, SearchScope.Subtree, attributesToReturn);
+                SearchRequest searchRequest = new SearchRequest(_dname, _filter, SearchScope.Subtree, _attributesToReturn);
                 var response = connection.SendRequest(searchRequest) as SearchResponse;
 
                 var result = new List<User>();

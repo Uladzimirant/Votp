@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using Votp.Models.Request;
+@model UserResolverLdapIDto;
+@inject IViewLocalizer Loc
+
+@{
+    ViewData["Title"] = Loc["Add Ldap resolver"];
+}
+
+<h1>Adding Ldap Resolver</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ResolverAddLdap">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" value="Ldap"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Host" class="control-label"></label>
+                <input asp-for="Host" class="form-control" />
+                <span asp-validation-for="Host" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Port" class="control-label"></label>
+                <input asp-for="Port" class="form-control" />
+                <span asp-validation-for="Port" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Filter" class="control-label"></label>
+                <input asp-for="Filter" class="form-control" value="(objectClass=inetOrgPerson)" />
+                <span asp-validation-for="Filter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Attributes" class="control-label"></label>
+                <input asp-for="Attributes" class="form-control" value='{ "UserName":"uid" }'/>
+                <span asp-validation-for="Attributes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Domain" class="control-label"></label>
+                <input asp-for="Domain" class="form-control" value="dc=example,dc=org"/>
+                <span asp-validation-for="Domain" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Create" class="btn btn-primary">@Loc["Create"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">@Loc["Back"]</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

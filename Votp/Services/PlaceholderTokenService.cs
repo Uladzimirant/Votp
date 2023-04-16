@@ -13,7 +13,7 @@ namespace Votp.Services
         public PlaceholderTokenService()
         {
             var r = Randomizer.Instance;
-            _tokens = r.GenerateSequence(3, 6, i => new TokenODto() { Token = r.NextAlphaNum(10), UserName = r.NextWord(5) }).ToList();
+            _tokens = r.GenerateSequence(3, 6, i => new TokenODto() { Name = r.NextAlphaNum(10), UserName = r.NextWord(5) }).ToList();
             _users = r.GenerateSequence(3, 6, i => new UserODto() { Name = r.NextWord(5), Email = r.NextWord(5) + "@mail.ru" }).ToList();
         }
 

@@ -6,6 +6,7 @@ namespace Votp.Contracts.Services.UserResolver
     {
         public ICollection<IResolver<User>> Resolvers { get; }
         public Task AddResolver(ResolverInfo resolverType);
+        public Task RemoveResolver(int id);
         public IEnumerable<User> GetUsers();
     }
 }

@@ -31,8 +31,4 @@
     <ProjectReference Include="..\Votp.Utils\Votp.Utils.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Domain\" />
-  </ItemGroup>
-
 </Project>

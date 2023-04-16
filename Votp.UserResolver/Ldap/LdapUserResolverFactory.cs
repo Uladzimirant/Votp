@@ -18,10 +18,12 @@ namespace Votp.UserResolver.Ldap
                     $"Wrong ResolverInfo derived class has been passed: {typeof(LdapUserResolverInfo).AssemblyQualifiedName} required, {info.GetType().AssemblyQualifiedName} received",
                     nameof(info));
 
-
             return new LdapUserResolver(
-                new LdapDirectoryIdentifier(fullInfo.Server, fullInfo.Port ?? 389),
-                new System.Net.NetworkCredential(fullInfo.ConnectionLogin, fullInfo.ConnectionPassword));
+                new LdapDirectoryIdentifier(fullInfo.Host, fullInfo.Port ?? 389),
+                new System.Net.NetworkCredential(fullInfo.Login, fullInfo.Password),
+                fullInfo.Filter,
+                fullInfo.AttributesJson,
+                fullInfo.Domain);
         }
     }
 }

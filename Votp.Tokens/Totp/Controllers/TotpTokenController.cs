@@ -38,7 +38,7 @@ namespace Votp.Tokens.Totp.Controllers
             var totpToken = M.Map<TotpToken>(dto);
             totpToken.Key = _generator.Generate(20);
             await AddToken(totpToken);
-            return RedirectToAction("Details", new { id = dto.Value });
+            return RedirectToAction("Details", new { id = (await TokenService.GetTokens()).Single(t => t.Name == dto.Name).Id });
         }
 
         [HttpGet]

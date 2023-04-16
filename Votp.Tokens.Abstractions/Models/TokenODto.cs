@@ -8,6 +8,7 @@ namespace Votp.Tokens.Abstractions.Models
 {
     public class TokenODto
     {
+        public string Name { get; set; }
         public string User { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Votp.Tokens.Time.Controllers
         public async Task<IActionResult> Add(TimeTokenIDto dto)
         {
             await AddToken(M.Map<TimeToken>(dto));
-            return RedirectToAction("Details", new { id = dto.Value });
+            return RedirectToAction("Details", new { id = (await TokenService.GetTokens()).Single(t => t.Name == dto.Name).Id });
         }
 
         [HttpGet]
