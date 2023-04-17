@@ -43,6 +43,8 @@ namespace Votp.Services
             get { return _resolvers; }
         }
 
+        public async Task<ICollection<ResolverInfo>> GetResolverInfos() => await _db.Resolvers.ToListAsync();
+
         public async Task AddResolver(ResolverInfo info)
         {
             var factory = _factoryContainer.GetFactory(info.Name.ToString());

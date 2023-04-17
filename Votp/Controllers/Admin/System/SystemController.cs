@@ -21,13 +21,12 @@ namespace Votp.Web.Admin.System.Controllers
             _userResolverService = resolverService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_userResolverService.Resolvers.Select(
-                (resolver, i) =>
+            return View((await _userResolverService.GetResolverInfos()).Select(
+                (resolver) =>
                 {
                     var dto = _mapper.Map<UserResolverODto>(resolver);
-                    dto.Id = i;
                     return dto;
                 })); 
         }

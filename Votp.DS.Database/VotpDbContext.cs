@@ -3,6 +3,7 @@ using Votp.Contracts.Services;
 using Votp.Contracts;
 using Votp.UserResolver.Ldap;
 using Votp.DS.Entities;
+using Votp.UserResolver.InnerDatabase;
 
 namespace Votp.DS.Database
 {
@@ -44,6 +45,10 @@ namespace Votp.DS.Database
             modelBuilder.Entity<ResolverInfo>(ent =>
             {
                 ent.HasKey(e => e.Id);
+            });
+            modelBuilder.Entity<DatabaseUserResolverInfo>(ent =>
+            {
+                ent.HasBaseType<ResolverInfo>();
             });
             modelBuilder.Entity<LdapUserResolverInfo>(ent =>
             {

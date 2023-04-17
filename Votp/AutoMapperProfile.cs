@@ -19,15 +19,15 @@ namespace Votp
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Login));
             CreateMap<TokenIDto, Token>();
 
-            CreateMap<IResolver<User>, UserResolverODto>()
+            CreateMap<ResolverInfo, UserResolverODto>()
                 .ForMember(d => d.Type, o => o.MapFrom(s => s.GetType().Name));
-            CreateMap<DatabaseUserResolver, UserResolverODto>()
-                .IncludeBase<IResolver<User>, UserResolverODto>()
+            CreateMap<DatabaseUserResolverInfo, UserResolverODto>()
+                .IncludeBase<ResolverInfo, UserResolverODto>()
                 .ForMember(d=>d.AdditionalDataString,o=>o.MapFrom(s=>"Users From Inner Database"));
-            CreateMap<LdapUserResolver, UserResolverODto>()
-                .IncludeBase<IResolver<User>, UserResolverODto>()
+            CreateMap<LdapUserResolverInfo, UserResolverODto>()
+                .IncludeBase<ResolverInfo, UserResolverODto>()
                 .ForMember(d => d.AdditionalDataString, o => o.MapFrom(
-                    s => $"Server={s.LDAPAddress.Servers[0]}:{s.LDAPAddress.PortNumber}"
+                    s => $"Server={s.Host}{(s.Port != null ? $":{s.Port}" : "")}"
                     ));
 
             CreateMap<UserResolverDatabaseIDto, DatabaseUserResolverInfo>();

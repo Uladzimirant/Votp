@@ -9,11 +9,11 @@ namespace Votp.Controllers.ValidationAPI
     [ApiController]
     public class ValidationController : ControllerBase
     {
-        private ILogger<ValidationController> _l;
+        private ILogger<ValidationController> _logger;
         private ITokenCheckerService _checker;
-        public ValidationController(ILogger<ValidationController> l, ITokenCheckerService checker)
+        public ValidationController(ILogger<ValidationController> logger, ITokenCheckerService checker)
         {
-            _l = l;
+            _logger = logger;
             _checker = checker;
         }
 

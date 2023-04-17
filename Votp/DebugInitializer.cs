@@ -3,6 +3,7 @@ using Votp.DS.Database;
 using Votp.DS.Entities;
 using Votp.Tokens.Time.Entities;
 using Votp.Tokens.Totp.Entities;
+using Votp.UserResolver.InnerDatabase;
 using Votp.Utils;
 
 namespace Votp
@@ -41,7 +42,7 @@ namespace Votp
                                     .ToList());
                         }
                         dbMain.Tokens.AddRange(tokens);
-                        dbMain.Resolvers.Add(new ResolverInfo() { Name = "Database" });
+                        dbMain.Resolvers.Add(new DatabaseUserResolverInfo() { Name = "Database" });
                         //db.Resolvers.Add(new LdapUserResolverInfo() { ResolverName = "Ldap", Server = "localhost", Port = 10389, ConnectionLogin = "cn=admin,dc=example,dc=org", ConnectionPassword = "admin" }) ;
 
                         dbMain.SaveChanges();
