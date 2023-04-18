@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Votp.Contracts;
 using Votp.Contracts.Services;
 using Votp.DS.Entities;
+using Votp.Exceptions;
 using Votp.Models.Request;
 using Votp.Models.Response;
 using Votp.Services;
@@ -43,9 +44,16 @@ namespace Votp.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(UserIDto dto)
         {
-            _innerUsersDB.Users.Add(new User() { Login = dto.Name });
-            await _innerUsersDB.AsContext().SaveChangesAsync();
-            return RedirectToAction(nameof(InnerUsers));
+            try
+            {
+                if ((await _userService.GetUsers()).Count(u => u.Login == dto.Name) > 0) throw new ExpectedException($"User with name '{dto.Name}' already exists");
+                _innerUsersDB.Users.Add(new User() { Login = dto.Name });
+                await _innerUsersDB.AsContext().SaveChangesAsync();
+                return RedirectToAction(nameof(InnerUsers));
+            }
+            catch (ExpectedException ex) { 
+                return View("ErrorMessage",ex.Message);
+            }
         }
 
         [HttpPost]

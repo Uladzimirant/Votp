@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Votp.DS.Entities\Votp.DS.Entities.csproj" />
+    <ProjectReference Include="..\Votp.Exceptions\Votp.Exceptions.csproj" />
   </ItemGroup>
 
 </Project>

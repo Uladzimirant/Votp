@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Votp.Contracts.Services;
+using Votp.Exceptions;
 using Votp.Tokens.Abstractions.Controllers;
 using Votp.Tokens.Abstractions.Models;
 using Votp.Tokens.Time.Entities;
@@ -25,8 +26,12 @@ namespace Votp.Tokens.Time.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(TimeTokenIDto dto)
         {
-            await AddToken(Mapper.Map<TimeToken>(dto));
-            return RedirectToAction("Details", new { id = (await TokenService.GetTokens()).Single(t => t.Name == dto.Name).Id });
+            try
+            {
+                await AddToken(Mapper.Map<TimeToken>(dto));
+                return RedirectToAction("Details", new { id = (await TokenService.GetTokens()).Single(t => t.Name == dto.Name).Id });
+            }
+            catch (ExpectedException ex) { return View("ErrorMessage", ex.Message); }
         }
 
         [HttpGet]

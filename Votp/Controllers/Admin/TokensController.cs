@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Votp.Contracts.Services;
 using Votp.DS.Entities;
+using Votp.Exceptions;
 using Votp.Models.Request;
 using Votp.Models.Response;
 using Votp.Tokens.Time.Controllers;
@@ -37,8 +38,15 @@ namespace Votp.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(TokenIDto dto)
         {
-            await _tokenService.CreateToken(_m.Map<Token>(dto));
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _tokenService.CreateToken(_m.Map<Token>(dto));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (ExpectedException e)
+            {
+                return View("ErrorMessage", e.Message);
+            }
         }
 
         [HttpPost]

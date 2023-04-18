@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Services", "Votp.Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.UserResolver", "Votp.UserResolver\Votp.UserResolver.csproj", "{C8876CBB-10C9-45E8-8BB7-A4E30451B417}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.Tokens", "Votp.Tokens\Votp.Tokens.csproj", "{9AB2AC6F-6635-4886-BBD2-920ADBE628A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Tokens", "Votp.Tokens\Votp.Tokens.csproj", "{9AB2AC6F-6635-4886-BBD2-920ADBE628A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.Tokens.Abstractions", "Votp.Tokens.Abstractions\Votp.Tokens.Abstractions.csproj", "{5F54D8DD-69C3-4B9F-A95F-6C1B0A96A44D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Votp.Tokens.Abstractions", "Votp.Tokens.Abstractions\Votp.Tokens.Abstractions.csproj", "{5F54D8DD-69C3-4B9F-A95F-6C1B0A96A44D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Votp.Exceptions", "Votp.Exceptions\Votp.Exceptions.csproj", "{FED16131-AA31-4495-BFC0-1D85C6AA7E0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{5F54D8DD-69C3-4B9F-A95F-6C1B0A96A44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F54D8DD-69C3-4B9F-A95F-6C1B0A96A44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F54D8DD-69C3-4B9F-A95F-6C1B0A96A44D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FED16131-AA31-4495-BFC0-1D85C6AA7E0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FED16131-AA31-4495-BFC0-1D85C6AA7E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FED16131-AA31-4495-BFC0-1D85C6AA7E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FED16131-AA31-4495-BFC0-1D85C6AA7E0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

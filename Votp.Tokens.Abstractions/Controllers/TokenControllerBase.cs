@@ -28,7 +28,7 @@ namespace Votp.Tokens.Abstractions.Controllers
 
         protected IActionResult ViewErrorTokenMessage(string message)
         {
-            return View("/Tokens/TokenErrorMessage", message);
+            return View("ErrorMessage", message);
         }
 
         protected async Task<(T? token, IActionResult? action)> TryGetTokenByIdAs<T>(int id) where T : class

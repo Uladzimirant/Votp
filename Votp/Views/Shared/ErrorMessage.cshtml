@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@model string
+@inject IViewLocalizer Loc;
+
+@{
+    ViewData["Title"] = Loc["Message"];
+}
+
+<h1>Error while processing token</h1>
+
+@Html.DisplayFor(model => model)
+
+<p><a asp-action="Index" asp-controller="Tokens">@Loc["Go back"]</a></p>
+

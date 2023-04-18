@@ -6,6 +6,7 @@ using Votp.Contracts.Services;
 using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Database;
 using Votp.DS.Entities;
+using Votp.Exceptions;
 
 namespace Votp.Services
 {
@@ -26,13 +27,11 @@ namespace Votp.Services
 
         public async Task CreateToken(Token input)
         {
-            try
-            {
-                var user = (await _userService.GetUsers()).Single(u => u.Login == input.UserName);
-                _db.Tokens.Add(input);
-                await _db.AsContext().SaveChangesAsync();
-            }
-            catch (InvalidOperationException) { throw new Exception($"No or multiple user {input.User.Login} found"); }
+            var users = (await _userService.GetUsers()).FindAll(u => u.Login == input.UserName);
+            if (users.Count == 0) throw new ExpectedException($"No user '{input.UserName}' found");
+            if (users.Count > 1) throw new ExpectedException($"Multiple users '{input.UserName}' found. Remove users with same name");
+            _db.Tokens.Add(input);
+            await _db.AsContext().SaveChangesAsync();
         }
 
         //public async Task CreateUser(User input)

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Votp.Contracts.Services;
+using Votp.Exceptions;
 using Votp.Tokens.Abstractions.Controllers;
 using Votp.Tokens.Time.Entities;
 using Votp.Tokens.Time.Models;
@@ -35,10 +36,14 @@ namespace Votp.Tokens.Totp.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(TotpTokenIDto dto)
         {
-            var totpToken = Mapper.Map<TotpToken>(dto);
-            totpToken.Key = _generator.Generate(20);
-            await AddToken(totpToken);
-            return RedirectToAction("Details", new { id = (await TokenService.GetTokens()).Single(t => t.Name == dto.Name).Id });
+            try
+            {
+                var totpToken = Mapper.Map<TotpToken>(dto);
+                totpToken.Key = _generator.Generate(20);
+                await AddToken(totpToken);
+                return RedirectToAction("Details", new { id = (await TokenService.GetTokens()).Single(t => t.Name == dto.Name).Id });
+            }
+            catch (ExpectedException ex) { return View("ErrorMessage", ex.Message); }
         }
 
         [HttpGet]
