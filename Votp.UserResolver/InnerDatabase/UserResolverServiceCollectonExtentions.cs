@@ -6,10 +6,9 @@ namespace Votp.UserResolver.InnerDatabase
 {
     public static class UserResolverServiceCollectonExtentions
     {
-        public static IResolverFactoryContainerService<User> RegisterDatabaseUserResolver(this IResolverFactoryContainerService<User> c, IDBLibService dbLibs, IServiceProvider p)
+        public static IResolverFactoryContainerService<User> RegisterDatabaseUserResolver(this IResolverFactoryContainerService<User> c, IServiceProvider p)
         {
             c.RegisterFactory("Database", new DatabaseUserResolverFactory(p));
-            dbLibs.LibAssemblies.Add(typeof(DatabaseUserResolverInfo).Assembly);
             return c;
         }
     }

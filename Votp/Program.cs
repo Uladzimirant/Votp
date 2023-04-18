@@ -10,7 +10,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Microsoft.Extensions.Localization;
 using Votp.Contracts.Services;
 using Votp.Contracts.Services.UserResolver;
 using Votp.DS.Database;
@@ -27,38 +26,16 @@ using Votp.Contracts;
 using Votp.Tokens.Time.Entities;
 using Votp.Tokens.Time;
 using Votp.Tokens.Totp.Entities;
+using Votp.Tokens;
 
 namespace Votp
 {
-    public class Program
+    public partial class Program
     {
-        public class PlaceholdLocalizator : IViewLocalizer
-        {
-            public LocalizedHtmlString this[string name] => new LocalizedHtmlString(name, name);
-
-            public LocalizedHtmlString this[string name, params object[] arguments] => this[name];
-
-            public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
-            {
-                throw new NotImplementedException();
-            }
-
-            public LocalizedString GetString(string name)
-            {
-                return new LocalizedString(name, name);
-            }
-
-            public LocalizedString GetString(string name, params object[] arguments)
-            {
-                return GetString(name);
-            }
-        }
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            IDBLibService dbLibService = new RegistratorService();
 
-            
             // Add services to the container.
             string? s = 
                 Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? 
@@ -70,40 +47,34 @@ namespace Votp
             builder.Services.AddDbContext<IVotpDbContext, VotpDbContext>(o => o.UseSqlServer(s));
             builder.Services.AddDbContext<IInnerUsersDBContext, InnerUsersDBContext>(o => o.UseSqlServer(sUsers));
 
-
             builder.Services.AddSingleton<IResolverFactoryContainerService<User>>(p =>
                 new UserResolverFactoryContainerService()
-                .RegisterDatabaseUserResolver(dbLibService, p)
-                .RegisterLdapUserResolver(dbLibService)
+                .RegisterDatabaseUserResolver(p)
+                .RegisterLdapUserResolver()
                 );
-
             builder.Services.AddTransient<ITokenService, DBTokenService>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<ITokenCheckerService, TokenCheckerService>();
             builder.Services.AddTransient<IByteGeneratorService, ByteGeneratorService>();
-
-
+            builder.Services.AddTransient<IUserResolverService, UserResolverService>();
             builder.Services.AddTransient<IViewLocalizer, PlaceholdLocalizator>();
 
+            IDBLibService dbLibService = new RegistratorService();
+            dbLibService.LibAssemblies.Add(typeof(SystemTimeTokenController).Assembly);
+            builder.Services.AddSingleton<IDBLibService>(dbLibService);
 
-            builder.Services.AddTransient<IUserResolverService, UserResolverService>();
-
-            
+            List<Type> mapperTypes = new List<Type>()
+            {
+                typeof(AutoMapperProfile),
+                typeof(TokensMapperProfile)
+            };
+            builder.Services.AddAutoMapper(mapperTypes.ToArray());
 
             List<Assembly> assemblies = new List<Assembly>()
             {
-                typeof(SystemTimeTokenController).Assembly
+                typeof(SystemTimeTokenController).Assembly,
+                typeof(DatabaseUserResolverInfo).Assembly
             };
-            List<Type> mapperTypes = new List<Type>()
-            {
-                typeof(AutoMapperProfile)
-            };
-            
-
-            builder.Services.AddTimedToken(assemblies, mapperTypes, dbLibService);
-
-            builder.Services.AddSingleton<IDBLibService>(dbLibService);
-            builder.Services.AddAutoMapper(mapperTypes.ToArray());
 
             var mvcBuilder = builder.Services.AddControllersWithViews();
             foreach (var assembly in assemblies)
@@ -117,8 +88,7 @@ namespace Votp
                         o.FileProviders.Add(new EmbeddedFileProvider(assembly));
                     }
                 });
-            
-            
+
 
             var app = builder.Build();
 
