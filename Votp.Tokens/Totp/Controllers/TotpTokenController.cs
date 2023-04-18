@@ -35,7 +35,7 @@ namespace Votp.Tokens.Totp.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(TotpTokenIDto dto)
         {
-            var totpToken = M.Map<TotpToken>(dto);
+            var totpToken = Mapper.Map<TotpToken>(dto);
             totpToken.Key = _generator.Generate(20);
             await AddToken(totpToken);
             return RedirectToAction("Details", new { id = (await TokenService.GetTokens()).Single(t => t.Name == dto.Name).Id });
@@ -44,12 +44,15 @@ namespace Votp.Tokens.Totp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var rawToken = (await TokenService.GetTokens()).Single(e => e.Id == id);
-            if (rawToken == null) { return NoToken(id); }
-            var token = rawToken as TotpToken;
-            if (token == null) { return WrongToken(rawToken.GetType(), typeof(TotpToken)); }
+            //var rawToken = (await TokenService.GetTokens()).Single(e => e.Id == id);
+            //if (rawToken == null) { return NoToken(id); }
+            //var token = rawToken as TotpToken;
+            //if (token == null) { return WrongToken(rawToken.GetType(), typeof(TotpToken)); }
 
-            var odto = M.Map<TotpTokenODto>(token);
+            var (token, action) = await TryGetTokenByIdAs<TotpToken>(id);
+            if (token == null) { return action ?? throw new NullReferenceException("TryGetTokenByIdAs returned second null in action which not supposed to happen"); }
+
+            var odto = Mapper.Map<TotpTokenODto>(token);
             odto.QRImageBase64 = StringToBase64QREncoder.Transform($"otpauth://totp/votp:{token.User.Login}?secret={odto.KeyBase32}&issuer=votp");
 
             return View(odto);

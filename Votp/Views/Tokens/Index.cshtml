@@ -17,6 +17,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -34,33 +35,36 @@
     </thead>
     <tbody>
 @foreach (var item in Model) { 
-        <tr>
-            <td>
-                <label for=@item.Id>
-                @Html.DisplayFor(modelItem => item.Name)
-                </label>
-            </td>
-            <td>
-                <label for=@item.Id>
-                    @Html.DisplayFor(modelItem => item.TokenType)
-                </label>
-            </td>
-            <td>
-                <label for=@item.Id>
-                @Html.DisplayFor(modelItem => item.UserName)
-                </label>
-            </td>
-            <td>
-                <label for=@item.Id>
-                @Html.DisplayFor(modelItem => item.Locked)
-                </label>
-            </td>
-            <td>
-                <label for=@item.Id>
-                        <input type="checkbox" id="@item.Id" name="Selection" value="@item.Id"/>
-                </label>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <label for=@item.Id>
+                            <input type="checkbox" id="@item.Id" name="Selection" value="@item.Id"/>
+                    </label>
+                </td>
+                <td>
+                    <label for=@item.Id>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </label>
+                </td>
+                <td>
+                    <label for=@item.Id>
+                        @Html.DisplayFor(modelItem => item.TokenType)
+                    </label>
+                </td>
+                <td>
+                    <label for=@item.Id>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </label>
+                </td>
+                <td>
+                    <label for=@item.Id>
+                        @Html.DisplayFor(modelItem => item.Locked)
+                    </label>
+                </td>
+                <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) | @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
 }
     </tbody>
     <div class="form-group">

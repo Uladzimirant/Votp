@@ -39,25 +39,21 @@ namespace Votp.Web.Admin.System.Controllers
         }
 
         [HttpPost]
-        public IActionResult ResolverAdd(UserResolverDatabaseIDto dto) {
+        public async Task<IActionResult> ResolverAdd(UserResolverDatabaseIDto dto) {
             if (_userResolverService.Resolvers.Any(e => e is DatabaseUserResolver)) return RedirectToAction(nameof(Index));
-            _userResolverService.AddResolver(_mapper.Map<DatabaseUserResolverInfo>(dto));
+            await _userResolverService.AddResolver(_mapper.Map<DatabaseUserResolverInfo>(dto));
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
-        public IActionResult ResolverAddLdap(UserResolverLdapIDto dto)
+        public async Task<IActionResult> ResolverAddLdap(UserResolverLdapIDto dto)
         {
             var info = _mapper.Map<LdapUserResolverInfo>(dto);
-            _userResolverService.AddResolver(info);
+            await _userResolverService.AddResolver(info);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult ResolverEdit(int id) {
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult ResolverDelete(int id) {
-            _userResolverService.RemoveResolver(id);
+        public async Task<IActionResult> ResolverDelete(int id) {
+            await _userResolverService.RemoveResolver(id);
             return RedirectToAction(nameof(Index));
         }
     }

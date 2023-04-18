@@ -1,0 +1,23 @@
+﻿@using Votp.Tokens.Abstractions.Models;
+@model TokenODto
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Loc
+
+@{
+    ViewData["Title"] = Loc["Details"] + " - " + Loc["System Time token"];
+}
+
+<h1>@Loc["System Time token"]</h1>
+<div>
+    <p>Name - @Html.DisplayFor(m=>m.Name)</p>
+    <p>User - @Html.DisplayFor(m=>m.User)</p>
+</div>
+<div>
+    <a asp-controller="Tokens" asp-action="Index">@Loc["Back to token list"]</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

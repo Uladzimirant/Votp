@@ -5,6 +5,10 @@ using Votp.Contracts.Services;
 using Votp.DS.Entities;
 using Votp.Models.Request;
 using Votp.Models.Response;
+using Votp.Tokens.Time.Controllers;
+using Votp.Tokens.Time.Entities;
+using Votp.Tokens.Totp.Controllers;
+using Votp.Tokens.Totp.Entities;
 
 namespace Votp.Controllers.Admin
 {
@@ -55,6 +59,25 @@ namespace Votp.Controllers.Admin
                     throw new ArgumentException($"Unsupported button value: {sel.Action}");
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        private readonly static Dictionary<Type, Type> _controllerMap = new Dictionary<Type, Type>
+            {
+                { typeof(TimeToken), typeof(SystemTimeTokenController) },
+                { typeof(TotpToken), typeof(TotpTokenController) }
+            };
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _tokenService.DeleteTokens(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int id) 
+        {
+            var tokens = await _tokenService.GetTokens();
+            var token = tokens.Single(t => t.Id == id);
+            return Redirect($"{_controllerMap[token.GetType()].Name.Replace("Controller","")}?id={id}");
         }
 
         //// GET: AdminController/Details/5

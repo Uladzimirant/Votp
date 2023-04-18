@@ -8,11 +8,16 @@
 
   <ItemGroup>
     <None Remove="Views\SystemTimeToken\Add.cshtml" />
+    <None Remove="Views\SystemTimeToken\Details.cshtml" />
     <None Remove="Views\TotpToken\Details.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Views\SystemTimeToken\Add.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\SystemTimeToken\Details.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

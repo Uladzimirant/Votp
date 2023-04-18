@@ -21,6 +21,7 @@ namespace Votp.Tokens
             
             CreateMap<TimeTokenIDto, TimeToken>().IncludeBase<TokenIDto, Token>();
             CreateMap<TotpTokenIDto, TotpToken>().IncludeBase<TokenIDto, Token>();
+            CreateMap<TimeToken, TokenODto>().IncludeBase<Token, TokenODto>();
             CreateMap<TotpToken, TotpTokenODto>().IncludeBase<Token, TokenODto>()
                 .ForMember(d => d.KeyBase32, o => o.MapFrom(s=> Base32Encoding.ToString(s.Key)));
         }

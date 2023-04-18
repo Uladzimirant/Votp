@@ -9,7 +9,8 @@
 
 <h1>Users</h1>
 
-<form asp-action="SelectionAction">
+<a asp-action="InnerUsers">Users From Inner Database</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -40,9 +41,4 @@
         </tr>
 }
     </tbody>
-    <div class="form-group">
-        <a asp-action="Create" class="btn btn-primary">@Loc["Add new user"]</a>
-        <button name="Action" value="Delete" class="btn btn-primary">@Loc["Delete"]</button>
-    </div>
 </table>
-</form>

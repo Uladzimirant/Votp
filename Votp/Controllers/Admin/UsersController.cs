@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Votp.Contracts;
 using Votp.Contracts.Services;
 using Votp.DS.Entities;
@@ -15,11 +16,18 @@ namespace Votp.Controllers.Admin
         private ILogger<UsersController> _l;
         private readonly IMapper _m;
         private IUserService _userService;
-        public UsersController(ILogger<UsersController> l, IMapper mapper, IUserService userService)
+        private IInnerUsersDBContext _innerUsersDB;
+        public UsersController(ILogger<UsersController> l, IMapper mapper, IUserService userService, IInnerUsersDBContext innerUsersDB)
         {
             _l = l;
             _m = mapper;
             _userService = userService;
+            _innerUsersDB = innerUsersDB;
+        }
+
+        public async Task<IActionResult> InnerUsers()
+        {
+            return View((await _innerUsersDB.Users.ToListAsync()).Select(_m.Map<UserODto>));
         }
 
         public async Task<IActionResult> Index()
@@ -32,28 +40,28 @@ namespace Votp.Controllers.Admin
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create(UserIDto dto)
-        //{
-        //    //Temp method, so 
-        //    _tempDb.Users.Add(new User() { Login = dto.Name });
-        //    await _tempDb.AsContext().SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Create(UserIDto dto)
+        {
+            _innerUsersDB.Users.Add(new User() { Login = dto.Name });
+            await _innerUsersDB.AsContext().SaveChangesAsync();
+            return RedirectToAction(nameof(InnerUsers));
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> SelectionAction([FromForm] SelectionIDto sel)
-        //{
-        //    var uservice = (DBTokenService)_userService;
-        //    switch (sel.Action)
-        //    {
-        //        case "Delete":
-        //            await uservice.DeleteUsers(sel.Selection);
-        //            break;
-        //        default:
-        //            throw new ArgumentException($"Unsupported button value: {sel.Action}");
-        //    }
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [HttpPost]
+        public async Task<IActionResult> SelectionAction([FromForm] SelectionIDto sel)
+        {
+            switch (sel.Action)
+            {
+                case "Delete":
+                    await _innerUsersDB.Users.Where(u => sel.Selection.Contains(u.Id)).ExecuteDeleteAsync();
+                    break;
+                default:
+                    throw new ArgumentException($"Unsupported button value: {sel.Action}");
+            }
+            return RedirectToAction(nameof(InnerUsers));
+        }
+
+
     }
 }

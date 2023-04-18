@@ -56,7 +56,7 @@ namespace Votp.Services
 
         public async Task RemoveResolver(int id)
         {
-            await _db.Resolvers.Select(r => r.Id == id).ExecuteDeleteAsync();
+            await _db.Resolvers.Where(r => r.Id == id).ExecuteDeleteAsync();
         }
 
         public IEnumerable<User> GetUsers()

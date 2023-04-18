@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@using Votp.Models.Response;
+@model IEnumerable<Votp.Models.Response.UserODto>
+@inject IViewLocalizer Loc
+
+@{
+    ViewData["Title"] = Loc["Inner Users"];
+}
+
+<h1>Users From Inner Database</h1>
+
+<form asp-action="SelectionAction">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <label for=@item.Id>
+                            <input type="checkbox" id="@item.Id" name="Selection" value="@item.Id" />
+                        </label>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <div class="form-group">
+            <a asp-action="Create" class="btn btn-primary">@Loc["Add new user"]</a>
+            <button name="Action" value="Delete" class="btn btn-primary">@Loc["Delete"]</button>
+            <a asp-action="Index" class="btn btn-primary">@Loc["Back to all users"]</a>
+        </div>
+    </table>
+</form>

@@ -10,7 +10,15 @@
 <h1>@Loc["Totp token"]</h1>
 
 <img src="data:image;base64,@Model.QRImageBase64">
-
+<div>
+    <p>Name - @Html.DisplayFor(m=>m.Name)</p>
+    <p>User - @Html.DisplayFor(m=>m.User)</p>
+    <p></p>
+    <p>Totp info:</p>
+    <p>Key - @Html.DisplayFor(m=>m.KeyBase32)</p>
+    <p>Step - @Html.DisplayFor(m=>m.Step)</p>
+    <p>Size - @Html.DisplayFor(m=>m.TokenSize)</p>
+</div>
 <div>
     <a asp-controller="Tokens" asp-action="Index">@Loc["Back to token list"]</a>
 </div>
