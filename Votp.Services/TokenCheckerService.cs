@@ -7,20 +7,25 @@ namespace Votp.Services
 {
     public class TokenCheckerService : ITokenCheckerService
     {
-        private ILogger<TokenCheckerService> _l;
-        private IVotpDbContext _db;
+        private ILogger<TokenCheckerService> _logger;
+        private ITokenService _tokenService;
 
-        public TokenCheckerService(ILogger<TokenCheckerService> logger, IVotpDbContext db)
+        public TokenCheckerService(ILogger<TokenCheckerService> logger, ITokenService tokenService)
         {
-            _l = logger;
-            _db = db;
+            _logger = logger;
+            _tokenService = tokenService;
         }
 
         public async Task<bool> Check(string user, string code)
         {
-            bool res = (await _db.Tokens.Include(o => o.User).Where(o => o.User.Login == user).SingleAsync()).Check(code);
-            _l.LogInformation($"User '{user}' validation - {res}");
-            return res;
+            var tokens = (await _tokenService.GetTokens()).FindAll(o => o.UserName == user);
+            if (tokens.Count == 0) { return false; }
+
+            foreach (var token in tokens)
+            {
+                if (token.Check(code)) return true;
+            }
+            return false;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Votp.Controllers.ValidationAPI
         [HttpPost]
         public async Task<IActionResult> Check([FromForm] string user, [FromForm] string code)
         {
-            return Ok(new { Valid = await _checker.Check(user, code) });
+            return Ok(new { User = user, Valid = await _checker.Check(user, code) });
         }
 
         //// GET: api/<ValuesController>
