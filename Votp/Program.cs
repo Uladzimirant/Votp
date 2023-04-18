@@ -94,7 +94,7 @@ namespace Votp
 
             if (app.Environment.IsDevelopment())
             {
-                DebugInitializer.InitializeDatabases(app.Services);
+                //DebugInitializer.InitializeDatabases(app.Services);
             }
 
             // Configure the HTTP request pipeline.
